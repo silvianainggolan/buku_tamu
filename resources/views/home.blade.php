@@ -1,13 +1,47 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOME</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  </head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .container h1 {
+            font-family: 'Book Antiqua', sans-serif; 
+            font-size: 2rem; 
+            font-weight: bold; 
+            color: #333; 
+        }
+
+        .container h2 {
+            font-family: 'Book Antiqua', sans-serif; 
+            font-size: 3rem; 
+            font-weight: 600; 
+            color: #555; 
+        }
+        .container h6 {
+            font-family: 'Book Antiqua', sans-serif; 
+            font-size: 1rem; 
+            font-weight: 600; 
+            color: #555; 
+        }
+        .nav-pills .nav-link {
+            color: #000000; 
+            font-family: 'Elephant', sans-serif; 
+            
+        }
+
+        .nav-pills .nav-link.active {
+            color: #000000; 
+            
+        }
+
+        .nav-pills .nav-link:hover {
+            
+        }
+    </style>
+</head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-danger">
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
         <div class="container "></div>
     
   <ul class="nav nav-pills">
@@ -16,14 +50,16 @@
   </li>
   
   <li class="nav-item">
-  <a class="nav-link active" href="admin">Admin</a>
+  <a class="nav-link active" href="admin">ADMIN</a>
     
   </li>
   </nav>
 </ul>
   <div class="container mt-4">
     <h1>BUKU TAMU</h1>
-    <H2>KOMINFO KAB.DAIRI</H2>
+    <H2>DINAS KOMUNIKASI DAN </H2>
+     <H2> INFORMATIKA</H2>
+    <H6>KAB.DAIRI</H6>
   </div>
 
     
