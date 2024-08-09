@@ -27,43 +27,40 @@
         .nav-pills .nav-link {
             color: #000000; 
             font-family: 'Elephant', sans-serif; 
-            
         }
 
         .nav-pills .nav-link.active {
             color: #000000; 
-            
         }
 
         .nav-pills .nav-link:hover {
-            
         }
     </style>
 </head>
-  <body>
+<body>
     <nav class="navbar navbar-expand-lg navbar-light bg-primary">
-        <div class="container "></div>
-    
-  <ul class="nav nav-pills">
-  <li class="nav-item">
-    <a class="nav-link active" href="user">TAMU</a>
-  </li>
+        <div class="container"></div>
+        <ul class="nav nav-pills">
+            
+            <li class="nav-item">
+                <a class="nav-link active" href="login">ADMIN</a>
+            </li>
+        </ul>
+    </nav>
   
-  <li class="nav-item">
-  <a class="nav-link active" href="admin">ADMIN</a>
-    
-  </li>
-  </nav>
-</ul>
-  <div class="container mt-4">
-    <h1>BUKU TAMU</h1>
-    <H2>DINAS KOMUNIKASI DAN </H2>
-     <H2> INFORMATIKA</H2>
-    <H6>KAB.DAIRI</H6>
-  </div>
+    <div class="container mt-4">
+        <h1>BUKU TAMU</h1>
+        <h2>DINAS KOMUNIKASI DAN</h2>
+        <h2>INFORMATIKA</h2>
+        <h6>KAB.DAIRI</h6>
 
-    
-    
+        <!-- Button TAMU -->
+        <div class="container mt-4 text-center">
+        <div class="mt-4">
+            <a href="user" class="btn btn-primary btn-lg">TAMU</a>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-  </body>
+</body>
 </html>
