@@ -17,10 +17,10 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <<x-nav-link :href="route('pegawai')" :active="request()->routeIs('pegawai')">
+                    <x-nav-link :href="route('pegawai')" :active="request()->routeIs('pegawai')">
                         {{ __('Pegawai') }}
                     </x-nav-link>
-                    <<x-nav-link :href="route('tamu')" :active="request()->routeIs('tamu')">
+                    <x-nav-link :href="route('tamu')" :active="request()->routeIs('tamu')">
                     {{ __('Tamu') }}
                     </x-nav-link>
 
