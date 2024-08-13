@@ -33,9 +33,7 @@ class PegawaiController extends Controller
         ]);
 
         if($pegawai){
-            $data = Pegawai::get();
-
-            return view('pegawai', ['pegawai' => $data]);
+            return redirect('/pegawai')->with(['success'=>'Berhasil menambahkan data pegawai.']);
         }else{
             return "GAGAL";
         }
