@@ -31,11 +31,11 @@
                             <td>
 
 
-                                <form  action="{{ route('pegawai.hapus', $item->id) }}" method="POST" style="display:inline-block;">
+                                <a href="{{ route('pegawai.edit', $item['id']) }}" class="btn btn-sm btn-primary"><x-bladewind::button color="yellow">EDIT</x-bladewind::button></a>
+                                <form action="{{ route('pegawai.hapus', $item['id']) }}" method="POST" style="display:inline-block;">
                                     @csrf
                                     @method('DELETE')
-                                    <a href="{{ route('pegawai.edit', $item['id']) }}" class="btn btn-sm btn-primary"><x-bladewind::button color="yellow">EDIT</x-bladewind::button></a>
-                                    <x-bladewind::button type="submit" color="red" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">HAPUS</x-bladewind::button>
+                                    <x-bladewind::button can_submit="true" color="red" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">HAPUS</x-bladewind::button>
                                 </form>
                             </td>
                         </tr>
