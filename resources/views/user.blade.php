@@ -9,7 +9,6 @@
         body {
             
             font-family: Arial, sans-serif;
-            background-image: url(''kominfodairi.jpg''); 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -83,15 +82,16 @@
     <div class="form-container">
   <center>  <img class="h-8 w-8 rounded-full" src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Dairi_Regency_Emblem.png" width="100"></center>
         <h2>Formulir Tamu</h2>
-        <form>
+        <form action="{{ route('tamu.simpan') }}" method="post">
+        @csrf
             <b>
             <div class="form-group">
                 <label for="name">Nama Tamu:</label>
-                <input type="text" id="name" name="name" required>
+                <input type="text" id="name" name="nama" required>
             </div>
             <div class="form-group">
                 <label for="phone">Nomor Handphone:</label>
-                <input type="tel" id="phone" name="phone" required>
+                <input type="tel" id="phone" name="nomor_handphone" required>
             </div>
             <div class="form-group">
                 <label for="email">Email:</label>
@@ -99,11 +99,11 @@
             </div>
             <div class="form-group">
                 <label for="purpose">Keperluan:</label>
-                <textarea id="purpose" name="purpose" rows="4" required></textarea>
+                <textarea id="purpose" name="keperluan" rows="4" required></textarea>
             </div>
             <div class="form-group">
                 <label for="employee-id">Nomor Induk Pegawai:</label>
-                <input type="text" id="employee-id" name="employee-id" required>
+                <input type="text" id="employee-id" name="nip" required>
             </div>
             <div class="form-group">
                 <button type="submit">Submit</button>
