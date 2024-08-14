@@ -1,7 +1,10 @@
 <?php
 
+
+use App\Http\Controllers\TamuController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\ProfileController;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 
@@ -20,9 +23,13 @@ Route::get('/edit-pegawai/{x}', [PegawaiController::class, 'edit'])->middleware(
 Route::post('/update-pegawai/{x}', [PegawaiController::class, 'update'])->middleware(['auth', 'verified'])->name('pegawai.update');
 Route::delete('/hapus-pegawai/{id}', [PegawaiController::class, 'hapus'])->middleware(['auth', 'verified'])->name('pegawai.hapus');
 
-Route::get('/tamu', function () {
-    return view('tamu');
-})->middleware(['auth', 'verified'])->name('tamu');
+
+
+
+Route::get('/tamu', [TamuController::class, 'index'])->middleware(['auth', 'verified'])->name('tamu');
+Route::get('/tambah-tamu', [TamuController::class, 'tambah'])->middleware(['auth', 'verified'])->name('tamu.tambah');
+Route::post('/simpan-tamu', [TamuController::class, 'simpan'])->middleware(['auth', 'verified'])->name('tamu.simpan');
+
 
 Route::get('/user', function () {
     return view('user');
@@ -35,6 +42,8 @@ Route::delete('/admins.hapus/{id}', [adminController::class, 'hapus'])->middlewa
 
     
 
+
+Route::resource('/simpan-tamu_user', \App\Http\Controllers\Tamu_UserController::class);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
