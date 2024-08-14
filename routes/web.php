@@ -3,6 +3,7 @@
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
 
 Route::get('/', function () {
     return view('home');
@@ -26,6 +27,14 @@ Route::get('/tamu', function () {
 Route::get('/user', function () {
     return view('user');
 });
+Route::get('/admins', [AdminController::class, 'index'])->middleware(['auth', 'verified'])->name('admins');
+Route::get('/admins', [adminController::class, 'create'])->middleware(['auth', 'verified'])->name('admins');
+Route::post('/admins', [adminController::class, 'edit'])->middleware(['auth', 'verified'])->name('edit');
+Route::post('/admins/{x}', [adminController::class, 'update'])->middleware(['auth', 'verified'])->name('update');
+Route::delete('/admins.hapus/{id}', [adminController::class, 'hapus'])->middleware(['auth', 'verified'])->name('hapus');
+
+    
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
