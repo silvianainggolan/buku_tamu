@@ -9,41 +9,41 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    
-                    <a href="/tambah-pegawai">Tambah Pegawai</a>
-
-                   <table class="tabelku">
-                    <tr>
-                        <td>Nama</td>
-                        <td>NIP</td>
-                        <td>No HP</td>
-                        <td>Email</td>
-                        <td>Jabatan</td>
-                    </tr>
-                    
-                    @foreach ($pegawai as $item)
+                    <a href="{{route('pegawai.tambah')}}">
+                        <x-bladewind::button color="green">TAMBAH</x-bladewind::button>
+                    </a>
+                    <x-bladewind::table>
+                        <x-slot name="header">
+                            <th>Nama</th>
+                            <th>NIP</th>
+                            <th>No HP</th>
+                            <th>Email</th>
+                            <th>Jabatan</th>
+                            <th>Action</th>
+                        </x-slot>
+                        @foreach ($pegawai as $item)
                         <tr>
                             <td>{{ $item['nama'] }}</td>
                             <td>{{ $item['nip'] }}</td>
                             <td>{{ $item['nomor_handphone'] }}</td>
                             <td>{{ $item['email'] }}</td>
                             <td>{{ $item['jabatan'] }}</td>
+                            <td>
+
+
+                                <a href="{{ route('pegawai.edit', $item['id']) }}" class="btn btn-sm btn-primary"><x-bladewind::button color="yellow">EDIT</x-bladewind::button></a>
+                                <form action="{{ route('pegawai.hapus', $item['id']) }}" method="POST" style="display:inline-block;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <x-bladewind::button can_submit="true" color="red" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">HAPUS</x-bladewind::button>
+                                </form>
+                            </td>
                         </tr>
-                    @endforeach
-                   </table>
+                        @endforeach
+                    </x-bladewind::table>
+
                 </div>
             </div>
         </div>
     </div>
 </x-app-layout>
-
-<style>
-    .tabelku{
-        width: 100%
-    }
-
-    .tabelku tr td{
-        border: 1px #ddd solid;
-        padding: 4px
-    }
-</style>
