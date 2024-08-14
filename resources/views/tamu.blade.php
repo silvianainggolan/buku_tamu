@@ -19,6 +19,7 @@
                             <th>Email</th>
                             <th>Keperluan</th>
                             <th>NIP</th>
+                            <th>Nama Pegawai</th>
                         </x-slot>
                         
                         @foreach ($tamu as $item)
@@ -29,6 +30,7 @@
                                 <td>{{ $item['email'] }}</td>
                                 <td>{{ $item['keperluan'] }}</td>
                                 <td>{{ $item['nip'] }}</td>
+                                <td>{{ $item['pegawai']['nama'] }}</td>
                             </tr>
                         @endforeach
                     </x-bladewind::table>

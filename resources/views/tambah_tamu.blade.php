@@ -24,7 +24,12 @@
                         <input type="text" name="keperluan">
                         <br>
                         <p>NIP</p>
-                        <input type="text" name="nip">
+                        <select name="nip">
+                            <option value="">Tentukan Pegawai yang akan ditemui</option>
+                            @foreach ($pegawai as $item)
+                            <option value="{{ $item['nip'] }}">{{ $item['nama'] }}</option>
+                            @endforeach
+                        </select>
                         <br>
                         <button type="submit">Simpan</button>
                     </form>
@@ -35,7 +40,7 @@
 </x-app-layout>
 
 <style>
-    .formulir-tamu input{
+    .formulir-tamu input, .formulir-tamu select{
         color: black
     }
 </style>

@@ -3,20 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tamu;
+use App\Models\Pegawai;
 use Illuminate\Http\Request;
 
 class TamuController extends Controller
 {
     public function index() 
     {
-     $tamu = Tamu::latest()->paginate(10);
- 
+     $tamu = Tamu::with('pegawai')->latest()->paginate(10);
      return view('tamu',compact('tamu'));
     }
 
     public function tambah()
     {
-        return view('tambah_tamu');
+        $pegawai = Pegawai::get();
+        return view('tambah_tamu', ['pegawai' => $pegawai]);
     }
 
     public function simpan(Request $request)

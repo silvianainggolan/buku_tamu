@@ -17,4 +17,9 @@ class Tamu extends Model
         'keperluan',
         'nip',
     ];
+
+    public function pegawai()
+    {
+        return $this->belongsTo(Pegawai::class, 'nip', 'nip');
+    }
 }
