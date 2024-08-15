@@ -6,6 +6,7 @@ use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Tamu;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
 
 Route::get('/', function () {
     return view('home');
@@ -22,9 +23,6 @@ Route::get('/edit-pegawai/{x}', [PegawaiController::class, 'edit'])->middleware(
 Route::post('/update-pegawai/{x}', [PegawaiController::class, 'update'])->middleware(['auth', 'verified'])->name('pegawai.update');
 Route::delete('/hapus-pegawai/{id}', [PegawaiController::class, 'hapus'])->middleware(['auth', 'verified'])->name('pegawai.hapus');
 
-
-
-
 Route::get('/tamu', [TamuController::class, 'index'])->middleware(['auth', 'verified'])->name('tamu');
 Route::get('/tambah-tamu', [TamuController::class, 'tambah'])->middleware(['auth', 'verified'])->name('tamu.tambah');
 Route::post('/simpan-tamu', [TamuController::class, 'simpan'])->middleware(['auth', 'verified'])->name('tamu.simpan');
@@ -32,16 +30,22 @@ Route::get('/edit-tamu/{x}', [TamuController::class, 'edit'])->middleware(['auth
 Route::post('/update-tamu/{x}', [TamuController::class, 'update'])->middleware(['auth', 'verified'])->name('tamu.update');
 Route::delete('/hapus-tamu/{id}', [TamuController::class, 'hapus'])->middleware(['auth', 'verified'])->name('tamu.hapus');
 
-
-
 Route::get('/user', function () {
     return view('user');
 });
+Route::get('/admins', [AdminController::class, 'index'])->middleware(['auth', 'verified'])->name('admins');
+Route::get('/admins/create', [AdminController::class, 'create'])->middleware(['auth', 'verified'])->name('admins.create');
+Route::post('/admins/store', [AdminController::class, 'simpan'])->middleware(['auth', 'verified'])->name('admins.store');
 
 
 Route::post('/tamu/simpan', [TamuUserController::class, 'store'])->name('tamu.simpan');
 Route::put('/update-tamu/{id}', [TamuController::class, 'update'])->name('tamu.update');
 
+// Route::post('/admins/{x}', [AdminController::class, 'update'])->middleware(['auth', 'verified'])->name('update');
+Route::delete('/admins.hapus/{id}', [AdminController::class, 'hapus'])->middleware(['auth', 'verified'])->name('admins.hapus');
+
+Route::get('/admins/edit/{id}', [AdminController::class, 'edit'])->name('admins.edit');
+Route::put('/admins/update/{id}', [AdminController::class, 'update'])->name('admins.update');
 
 
 Route::middleware('auth')->group(function () {
