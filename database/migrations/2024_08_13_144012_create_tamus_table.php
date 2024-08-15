@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('nomor_handphone')->nullable();
             $table->string('email')->nullable();
             $table->string('keperluan')->nullable();
-            $table->string('nip', 30)->unique();
+            $table->string('nip', 30);
             $table->timestamps();
         });
     }

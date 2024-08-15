@@ -103,8 +103,12 @@
             </div>
             <div class="form-group">
                 <label for="employee-id">NIP:</label>
-                <input type="text" id="employee-id" name="nip" required>
-                
+                <select id="nip" name="nip" required>
+                    <option value="">Tentukan Pegawai yang akan ditemui</option>
+                    @foreach ($pegawai as $item)
+                        <option value="{{ $item['nip'] }}">{{ $item['nama'] }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group">
                 <button type="submit">Submit</button>

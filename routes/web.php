@@ -30,9 +30,8 @@ Route::get('/edit-tamu/{x}', [TamuController::class, 'edit'])->middleware(['auth
 Route::post('/update-tamu/{x}', [TamuController::class, 'update'])->middleware(['auth', 'verified'])->name('tamu.update');
 Route::delete('/hapus-tamu/{id}', [TamuController::class, 'hapus'])->middleware(['auth', 'verified'])->name('tamu.hapus');
 
-Route::get('/user', function () {
-    return view('user');
-});
+Route::get('/user', [TamuUserController::class, 'formTamu'])->name('form.tamu');
+
 Route::get('/admins', [AdminController::class, 'index'])->middleware(['auth', 'verified'])->name('admins');
 Route::get('/admins/create', [AdminController::class, 'create'])->middleware(['auth', 'verified'])->name('admins.create');
 Route::post('/admins/store', [AdminController::class, 'simpan'])->middleware(['auth', 'verified'])->name('admins.store');

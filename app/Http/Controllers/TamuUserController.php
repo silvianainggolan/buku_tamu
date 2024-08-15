@@ -3,10 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tamu;
+use App\Models\Pegawai;
 use Illuminate\Http\Request;
 
 class TamuUserController extends Controller
 {
+    public function formTamu()
+    {
+        $pegawai = Pegawai::get();
+        return view('user', ['pegawai' => $pegawai]);
+    }
     public function store(Request $request)
     {
         // Validasi data
