@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulir Tamu</title>
-    
+    <link href="{{ asset('vendor/bladewind/css/animate.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('vendor/bladewind/css/bladewind-ui.min.css') }}" rel="stylesheet" />
+    <script src="{{ asset('vendor/bladewind/js/helpers.js') }}"></script>
     <style>
         body {
             
@@ -82,6 +84,19 @@
     <div class="form-container">
   <center>  <img class="h-8 w-8 rounded-full" src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Dairi_Regency_Emblem.png" width="100"></center>
         <h2>Formulir Tamu</h2>
+        @if ($message = Session::get('success'))
+        <x-bladewind::alert
+            type="success">
+            {{ $message }}
+        </x-bladewind::alert>
+        @endif
+
+        @if ($message = Session::get('error'))
+        <x-bladewind::alert
+            type="error">
+            {{ $message }}
+        </x-bladewind::alert>
+        @endif
         <form action="{{ route('tamu.simpan') }}" method="post">
         @csrf
             <b>

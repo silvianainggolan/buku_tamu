@@ -35,6 +35,7 @@
                     <x-bladewind::table>
                         <x-slot name="header">
                             <th>No</th>
+                            <th>Status</th>
                             <th>Nama</th>
                             <th>No Handphone</th>
                             <th>Email</th>
@@ -47,6 +48,18 @@
                         @forelse ($tamu as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
+                                <td>
+                                    @if ($item->status == 0)
+                                    <x-bladewind::tag label="Belum Dikonfirmasi" color="red" />    
+                                    @else
+                                    <x-bladewind::tag label="Dikonfirmasi" color="green" />
+                                    @endif
+
+                                    @if (isset($item->pesan))
+                                    <br>
+                                        <small>{{ $item->pesan }}</small>
+                                    @endif
+                                </td>
                                 <td>{{ $item->nama }}</td>
                                 <td>{{ $item->nomor_handphone }}</td>
                                 <td>{{ $item->email }}</td>
@@ -54,6 +67,9 @@
                                 <td>{{ $item->nip }}</td>
                                 <td>{{ $item->pegawai->nama ?? 'N/A' }}</td>
                                 <td>
+                                    <a href="{{ route('tamu.konfirmasi', $item->id) }}" class="btn btn-sm btn-primary">
+                                        <x-bladewind::button color="green">KONFIRMASI</x-bladewind::button>
+                                    </a>
                                     <a href="{{ route('tamu.edit', $item->id) }}" class="btn btn-sm btn-primary">
                                         <x-bladewind::button color="yellow">EDIT</x-bladewind::button>
                                     </a>

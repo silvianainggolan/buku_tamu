@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Tamu;
 use App\Models\Pegawai; // Pastikan ini diimpor
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendEmail;
 
 class TamuController extends Controller
 {
@@ -76,11 +78,44 @@ class TamuController extends Controller
         return redirect()->route('tamu')->with('success', 'Berhasil memperbarui data tamu.');
     }
 
+    public function konfirmasi(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required',
+            'pesan' => 'required'
+        ]);
+
+        $tamu = Tamu::findOrFail($id);
+        $tamu->update($request->all());
+
+        if($request->status == 1){
+            $temp = "Reservasi anda dikonfirmasi!";
+        }else{
+            $temp = "Reservasi anda tidak dikonfirmasi!";
+        }
+
+        $data = [
+            'name' => $temp,
+            'body' => $request->pesan
+        ];
+       
+        Mail::to($tamu->email)->send(new SendEmail($data));
+
+        return redirect()->route('tamu')->with('success', 'Berhasil mengkonfirmasi data tamu.');
+    }
+
     public function hapus($id)
     {
         $tamu = Tamu::findOrFail($id);
         $tamu->delete();
 
         return redirect()->route('tamu')->with('success', 'Data tamu berhasil dihapus.');
+    }
+
+    public function formKonfirmasi($id)
+    {
+        $tamu = Tamu::findOrFail($id);
+
+        return view('formulir_konfirmasi', ['tamu' => $tamu]);
     }
 }

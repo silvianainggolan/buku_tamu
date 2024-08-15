@@ -35,9 +35,9 @@ class TamuUserController extends Controller
 
         // Redirect dengan pesan sukses
         if ($tamu) {
-            return redirect()->route('tamu')->with('success', 'Berhasil menambahkan data tamu.');
+            return redirect()->route('form.tamu')->with('success', 'Data berhasil disimpan, silahkan tunggu Resepsionis mengkonfirmasi!');
         } else {
-            return redirect()->route('tamu')->with('error', 'Gagal menambahkan data tamu.');
+            return redirect()->route('form.tamu')->with('error', 'Gagal menambahkan data tamu.');
         }      
     }
 }

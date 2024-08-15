@@ -16,6 +16,8 @@ class Tamu extends Model
         'email',
         'keperluan',
         'nip',
+        'status',
+        'pesan'
     ];
 
     public function pegawai()

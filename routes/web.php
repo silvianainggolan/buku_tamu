@@ -29,6 +29,8 @@ Route::post('/simpan-tamu', [TamuController::class, 'simpan'])->middleware(['aut
 Route::get('/edit-tamu/{x}', [TamuController::class, 'edit'])->middleware(['auth', 'verified'])->name('tamu.edit');
 Route::post('/update-tamu/{x}', [TamuController::class, 'update'])->middleware(['auth', 'verified'])->name('tamu.update');
 Route::delete('/hapus-tamu/{id}', [TamuController::class, 'hapus'])->middleware(['auth', 'verified'])->name('tamu.hapus');
+Route::get('/formulir-konfirmasi-tamu/{x}', [TamuController::class, 'formKonfirmasi'])->middleware(['auth', 'verified'])->name('tamu.konfirmasi');
+Route::put('/konfirmasi-tamu/{x}', [TamuController::class, 'konfirmasi'])->middleware(['auth', 'verified'])->name('tamu.simpan_konfirmasi');
 
 Route::get('/user', [TamuUserController::class, 'formTamu'])->name('form.tamu');
 
