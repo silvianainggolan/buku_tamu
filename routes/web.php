@@ -1,10 +1,10 @@
 <?php
 
-
+use App\Http\Controllers\TamuUserController;
 use App\Http\Controllers\TamuController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\ProfileController;
-
+use App\Models\Tamu;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -28,18 +28,27 @@ Route::delete('/hapus-pegawai/{id}', [PegawaiController::class, 'hapus'])->middl
 Route::get('/tamu', [TamuController::class, 'index'])->middleware(['auth', 'verified'])->name('tamu');
 Route::get('/tambah-tamu', [TamuController::class, 'tambah'])->middleware(['auth', 'verified'])->name('tamu.tambah');
 Route::post('/simpan-tamu', [TamuController::class, 'simpan'])->middleware(['auth', 'verified'])->name('tamu.simpan');
+Route::get('/edit-tamu/{x}', [TamuController::class, 'edit'])->middleware(['auth', 'verified'])->name('tamu.edit');
+Route::post('/update-tamu/{x}', [TamuController::class, 'update'])->middleware(['auth', 'verified'])->name('tamu.update');
+Route::delete('/hapus-tamu/{id}', [TamuController::class, 'hapus'])->middleware(['auth', 'verified'])->name('tamu.hapus');
+
 
 
 Route::get('/user', function () {
     return view('user');
 });
 
-Route::resource('/simpan-tamu_user', \App\Http\Controllers\Tamu_UserController::class);
+
+Route::post('/tamu/simpan', [TamuUserController::class, 'store'])->name('tamu.simpan');
+Route::put('/update-tamu/{id}', [TamuController::class, 'update'])->name('tamu.update');
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::put('/update-tamu/{id}', [TamuController::class, 'update'])->name('tamu.update');
 });
 
 require __DIR__.'/auth.php';

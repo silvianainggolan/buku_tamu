@@ -102,8 +102,9 @@
                 <textarea id="purpose" name="keperluan" rows="4" required></textarea>
             </div>
             <div class="form-group">
-                <label for="employee-id">Nomor Induk Pegawai:</label>
+                <label for="employee-id">NIP:</label>
                 <input type="text" id="employee-id" name="nip" required>
+                
             </div>
             <div class="form-group">
                 <button type="submit">Submit</button>

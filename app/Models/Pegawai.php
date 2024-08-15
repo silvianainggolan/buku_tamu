@@ -17,4 +17,5 @@ class Pegawai extends Model
         'email',
         'jabatan'
     ];
+
 }

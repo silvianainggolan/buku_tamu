@@ -37,5 +37,5 @@
 <style>
     .formulir-pegawai input{
         color: black
-    }
+    }
 </style>
