@@ -38,8 +38,8 @@ class AdminController extends Controller
     }
     public function edit(string $id): View
     {
-        $pegawai = Admin::findOrFail($id);
-        return view('edit_admin', compact('admin'));
+        $admins = Admin::findOrFail($id);
+        return view('admins.edit', compact('admins'));
     }
     public function update(Request $request, $id)
     {
