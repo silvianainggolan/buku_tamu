@@ -10,25 +10,53 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100" style="color: black;">
                     <form action="{{ route('pegawai.update', $pegawai->id) }}" method="post" class="formulir-pegawai">
                         @csrf
-                        <p style="color: white;">Nama</p>
-                        <input type="text" name="nama" value="{{$pegawai -> nama}}">
+                        <x-bladewind::input name="nama"
+                            label="Nama"
+                            value="{{$pegawai->nama}}"
+                            placeholder=""
+                            show_placeholder_always="true"
+                            class="input-custom-width" />
                         <br>
-                        <p style="color: white;">NIP</p>
-                        <input type="text" name="nip" value="{{$pegawai -> nip}}">
+                        <x-bladewind::input name="nip"
+                            label="NIP"
+                            value="{{$pegawai->nip}}"
+                            placeholder=""
+                            show_placeholder_always="true"
+                            class="input-custom-width" />
                         <br>
-                        <p style="color: white;">No HP</p>
-                        <input type="text" name="nomor_handphone"value="{{$pegawai -> nomor_handphone}}">
+                        <x-bladewind::input name="nomor_handphone"
+                            label="Nomor HP"
+                            value="{{$pegawai->nomor_handphone}}"
+                            placeholder=""
+                            show_placeholder_always="true"
+                            class="input-custom-width" />
                         <br>
-                        <p style="color: white;">Email</p>
-                        <input type="email" name="email" value="{{$pegawai -> email}}">
+                        <x-bladewind::input name="email"
+                            label="Email"
+                            value="{{$pegawai->email}}"
+                            placeholder=""
+                            show_placeholder_always="true"
+                            class="input-custom-width" />
                         <br>
-                        <p style="color: white;">Jabatan</p>
-                        <input type="text" name="jabatan" value="{{$pegawai -> jabatan}}">
+                        <x-bladewind::input name="jabatan"
+                            label="Jabatan"
+                            value="{{$pegawai->jabatan}}"
+                            placeholder=""
+                            show_placeholder_always="true"
+                            class="input-custom-width" />
                         <br>
-                        <button type="submit" style="color: white;">Edit Pegawai</button>
+                        <x-bladewind::button can_submit="true" color="green">EDIT</x-bladewind::button>
+                        <x-bladewind::button color="red" onclick="window.history.back()">BATAL</x-bladewind::button>
+
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </x-app-layout>
+<style>
+.input-custom-width {
+    max-width: 400px; 
+    width: 100%;
+}
+</style>
