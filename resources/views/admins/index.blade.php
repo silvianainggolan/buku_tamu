@@ -19,24 +19,24 @@
                         <x-slot name="header">
                             <th>Nama</th>
                             <th>Email</th>
-                            <th>Password</th>
                             <th>Action</th>
                         </x-slot>
 
                         @foreach ($admins as $item)
                             <tr>
-                                <td>{{ $item['nama'] }}</td>
+                                <td>{{ $item['name'] }}</td>
                                 <td>{{ $item['email'] }}</td>
-                                <td>{{ $item['password'] }}</td>
                                 <td>
                                     <a href="{{ route('admins.edit', $item['id']) }}">
                                         <x-bladewind::button color="yellow">EDIT</x-bladewind::button>
                                     </a>
-                                    <form action="{{ route('admins.hapus', $item['id']) }}" method="POST" style="display:inline-block;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <x-bladewind::button can_submit="true" color="red" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">HAPUS</x-bladewind::button>
-                                    </form>
+                                    @if ($logged_user->id != $item['id'])
+                                        <form action="{{ route('admins.hapus', $item['id']) }}" method="POST" style="display:inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <x-bladewind::button can_submit="true" color="red" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">HAPUS</x-bladewind::button>
+                                        </form>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

@@ -3,17 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
 class AdminController extends Controller
 {
-    public function index(): View
-{
-    $admins = Admin::all();
-    return view('admins.index', compact('admins'));
-}
+    public function index()
+    {
+        $admins = User::all();
+        $logged_user = \Auth::user();
+        return view('admins.index', compact('admins', 'logged_user'));
+    }
+
     public function create(): View
     {
         return view('admins.create');
@@ -23,11 +25,10 @@ class AdminController extends Controller
     {
         $data = $request->all();
 
-        $admins = Admin::create([
-            "nama" => $data['nama'],
+        $admins = User::create([
+            "name" => $data['name'],
             "email" => $data['email'],
-            "password" => $data['password'],
-            
+            "password" => $data['password']
         ]);
 
         if ($admins) {
@@ -38,36 +39,38 @@ class AdminController extends Controller
     }
     public function edit(string $id): View
     {
-        $admins = Admin::findOrFail($id);
+        $admins = User::findOrFail($id);
         return view('admins.edit', compact('admins'));
     }
     public function update(Request $request, $id)
     {
         //validate form
         $request->validate([
-            'nama'         => 'required',
-            'nip'         => 'required|min:5',
-            'nomor_handphone'   => 'required',
-            'email'         => 'required',
-            'jabatan'         => 'required'
+            'name'         => 'required',
+            'email'         => 'required'
         ]);
 
 
-        $admins = Admin::findOrFail($id);
+        $admins = User::findOrFail($id);
 
-
-        $admins->update([
-            'nama'         => $request->nama,
-            'email'         => $request->email,
-            'password'   => $request->passwor(d),
-           
-        ]);
+        if(isset($request->password)){
+            $admins->update([
+                'name'         => $request->name,
+                'email'         => $request->email,
+                'password'   => $request->password,
+            ]);
+        }else{
+            $admins->update([
+                'name'         => $request->name,
+                'email'         => $request->email
+            ]);
+        }
 
         return redirect()->route('admins')->with(['success' => 'Data Berhasil Diubah!']);
     }
     public function hapus($id)
     {
-        $admins = Admin::findOrFail($id);
+        $admins = User::findOrFail($id);
         $admins->delete();
 
         return redirect()->route('admins')->with('success', 'Data admin berhasil dihapus.');

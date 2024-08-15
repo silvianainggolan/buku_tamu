@@ -28,12 +28,14 @@ Route::get('/user', function () {
     return view('user');
 });
 Route::get('/admins', [AdminController::class, 'index'])->middleware(['auth', 'verified'])->name('admins');
-Route::get('/admins/create', [adminController::class, 'create'])->middleware(['auth', 'verified'])->name('admins.create');
+Route::get('/admins/create', [AdminController::class, 'create'])->middleware(['auth', 'verified'])->name('admins.create');
+Route::post('/admins/store', [AdminController::class, 'simpan'])->middleware(['auth', 'verified'])->name('admins.store');
 
-Route::post('/admins/{x}', [adminController::class, 'update'])->middleware(['auth', 'verified'])->name('update');
-Route::delete('/admins.hapus/{id}', [adminController::class, 'hapus'])->middleware(['auth', 'verified'])->name('admins.hapus');
+// Route::post('/admins/{x}', [AdminController::class, 'update'])->middleware(['auth', 'verified'])->name('update');
+Route::delete('/admins.hapus/{id}', [AdminController::class, 'hapus'])->middleware(['auth', 'verified'])->name('admins.hapus');
 
-Route::post('/admins/edit/{id}', [AdminController::class, 'edit'])->name('admins.edit');
+Route::get('/admins/edit/{id}', [AdminController::class, 'edit'])->name('admins.edit');
+Route::put('/admins/update/{id}', [AdminController::class, 'update'])->name('admins.update');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -9,16 +9,16 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <form action="/admins.create" method="post" class="formulir-admin">
+                    <form action="{{ route('admins.store') }}" method="post" class="formulir-admin">
                         @csrf
                         <p>Nama</p>
-                        <input type="text" name="nama">
+                        <input type="text" name="name">
                         <br>
-                        <p>email</p>
+                        <p>Email</p>
                         <input type="text" name="email">
                         <br>
-                        <p>password</p>
-                        <input type="text" name="password">
+                        <p>Password</p>
+                        <input type="password" name="password">
                         <br>
                         <div class="flex gap-4">
                             <x-bladewind::button can_submit="true" color="green">SUBMIT</x-bladewind::button>
