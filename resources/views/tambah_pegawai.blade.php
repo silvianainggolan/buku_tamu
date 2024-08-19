@@ -11,6 +11,7 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <form action="/simpan-pegawai" method="post" class="formulir-pegawai">
                         @csrf
+
                         <x-bladewind::input name="nama"
                             placeholder="Nama "
                             show_placeholder_always="true"
@@ -52,11 +53,11 @@
 </x-app-layout>
 
 <style>
-<<<<<<< HEAD
+
     .formulir-pegawai input{
         color: black
     }
-=======
+
     .input-custom-width {
         max-width: 400px; 
         width: 100%;
@@ -65,5 +66,5 @@
     .formulir-pegawai input {
         color: black;
     }
->>>>>>> 0b7933979dc50cf086e3bb2e20b6ec285bf19394
+
 </style>

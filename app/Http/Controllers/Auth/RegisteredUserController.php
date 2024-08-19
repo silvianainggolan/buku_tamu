@@ -21,6 +21,11 @@ class RegisteredUserController extends Controller
     {
         return view('auth.register');
     }
+    public function __construct()
+    {
+     abort(403,'registrasion is closed') ;
+    }
+    
 
     /**
      * Handle an incoming registration request.
