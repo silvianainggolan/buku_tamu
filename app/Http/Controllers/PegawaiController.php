@@ -4,76 +4,101 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pegawai;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
 class PegawaiController extends Controller
 {
-    public function index(): View
-{
-    $pegawai = Pegawai::oldest()->paginate(10);
+    // This method displays a list of employees, with optional search functionality.
+    public function index(Request $request): View
+    {
+        // Get the search query from the request
+        $search = $request->input('search');
 
-    return view('pegawai', compact('pegawai'));
-}
+        // Build the query
+        $query = Pegawai::query();
+
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('nama', 'like', "%{$search}%")
+                  ->orWhere('nip', 'like', "%{$search}%")
+                  ->orWhere('nomor_handphone', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('jabatan', 'like', "%{$search}%");
+            });
+        }
+
+        // Paginate the results, with the latest entries first
+        $pegawai = $query->latest()->paginate(10);
+
+        return view('pegawai', compact('pegawai'));
+    }
+
+    // Show the form to add a new employee
     public function tambah(): View
     {
         return view('tambah_pegawai');
     }
 
+    // Save the new employee data to the database
     public function simpan(Request $request)
     {
-        $data = $request->all();
-
-        $pegawai = Pegawai::create([
-            "nama" => $data['nama'],
-            "nip" => $data['nip'],
-            "nomor_handphone" => $data['nomor_handphone'],
-            "email" => $data['email'],
-            "jabatan" => $data['jabatan'],
+        $data = $request->validate([
+            'nama' => 'required',
+            'nip' => 'required|min:5',
+            'nomor_handphone' => 'required',
+            'email' => 'required|email',
+            'jabatan' => 'required',
         ]);
 
+        // Create a new Pegawai record
+        $pegawai = Pegawai::create($data);
+
+        // Check if the creation was successful
         if ($pegawai) {
             return redirect()->route('pegawai')->with(['success' => 'Berhasil menambahkan data pegawai.']);
         } else {
-            return "GAGAL";
+            return back()->withErrors(['msg' => 'Gagal menambahkan data pegawai.']);
         }
     }
+
+    // Show the form to edit an existing employee
     public function edit(string $id): View
     {
-        $pegawai = pegawai::findOrFail($id);
+        // Find the employee by ID or fail
+        $pegawai = Pegawai::findOrFail($id);
         return view('edit_pegawai', compact('pegawai'));
     }
-    public function update(Request $request, $id)
+
+    // Update the employee data in the database
+    public function update(Request $request, string $id)
     {
-        //validate form
+        // Validate the form inputs
         $request->validate([
-            'nama'         => 'required',
-            'nip'         => 'required|min:5',
-            'nomor_handphone'   => 'required',
-            'email'         => 'required',
-            'jabatan'         => 'required'
+            'nama' => 'required',
+            'nip' => 'required|min:5',
+            'nomor_handphone' => 'required',
+            'email' => 'required|email',
+            'jabatan' => 'required',
         ]);
 
+        // Find the employee record by ID
+        $pegawai = Pegawai::findOrFail($id);
 
-        $pegawai = pegawai::findOrFail($id);
-
-
-        $pegawai->update([
-            'nama'         => $request->nama,
-            'nip'         => $request->nip,
-            'nomor_handphone'   => $request->nomor_handphone,
-            'email'         => $request->email,
-            'jabatan'         => $request->jabatan
-        ]);
+        // Update the employee's details
+        $pegawai->update($request->only(['nama', 'nip', 'nomor_handphone', 'email', 'jabatan']));
 
         return redirect()->route('pegawai')->with(['success' => 'Data Berhasil Diubah!']);
     }
-    public function hapus($id)
+
+    // Delete an employee record from the database
+    public function hapus(string $id)
     {
+        // Find the employee by ID or fail
         $pegawai = Pegawai::findOrFail($id);
+
+        // Delete the employee
         $pegawai->delete();
 
         return redirect()->route('pegawai')->with('success', 'Data pegawai berhasil dihapus.');
     }
-
 }

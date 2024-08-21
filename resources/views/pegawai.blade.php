@@ -12,6 +12,19 @@
                     <a href="{{route('pegawai.tambah')}}">
                         <x-bladewind::button color="green">TAMBAH</x-bladewind::button>
                     </a>
+                    <form method="GET" action="{{ route('pegawai') }}" class="my-4 flex">
+    <input
+        name="search"
+        type="text"
+        placeholder="Cari berdasarkan nama, no handphone, email..."
+        value="{{ request('search') }}"
+        style="color: black;" 
+        class="flex-1 mr-2 border border-gray-300 rounded px-3 py-2"
+    />
+    <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded">
+        Cari
+    </button>
+</form>
                     <x-bladewind::table>
                         <x-slot name="header">
                             <th>Nama</th>

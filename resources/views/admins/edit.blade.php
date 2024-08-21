@@ -21,7 +21,25 @@
                         <input type="password" name="password" value="">
                         <br>
                         
-                        <button type="submit" style="color: white;">Edit admin</button>
+                        <button type="submit" style="
+    color: white; 
+    background-color: #28a745; 
+    padding: 10px 20px; 
+    border-radius: 5px; 
+    border: none; 
+    cursor: pointer; 
+    transition: 0.3s;
+">
+    Edit Admin
+</button>
+
+<style>
+    button:hover {
+        background-color: #218838;
+    }
+</style>
+
+
                     </form>
                 </div>
             </div>
