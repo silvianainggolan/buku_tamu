@@ -171,6 +171,7 @@
         <h2>DINAS KOMUNIKASI DAN</h2>
         <h2>INFORMATIKA</h2>
         <h6>KAB. DAIRI</h6>
+        
 
         <!-- Button TAMU -->
         <div>

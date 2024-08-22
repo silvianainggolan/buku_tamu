@@ -27,6 +27,8 @@
     </button>
 </form>
                     </a>
+                    <form method="GET" action="{{ route('pegawai') }}" class="my-4 flex">
+   
                     <x-bladewind::table>
                         <x-slot name="header">
                             <th>Nama</th>

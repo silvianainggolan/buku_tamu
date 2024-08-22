@@ -20,10 +20,25 @@
                         <p style="color: white;">password</p>
                         <input type="password" name="password" value="">
                         <br>
-                    
-                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-yellow-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:outline-none focus:border-blue-700 focus:ring-2 focus:ring-yellow-500 active:bg-blue-600 transition ease-in-out duration-150">
-                        edit admin
-                    </button>
+                        
+                        <button type="submit" style="
+    color: white; 
+    background-color: #28a745; 
+    padding: 10px 20px; 
+    border-radius: 5px; 
+    border: none; 
+    cursor: pointer; 
+    transition: 0.3s;
+">
+    Edit Admin
+</button>
+
+<style>
+    button:hover {
+        background-color: #218838;
+    }
+</style>
+
 
                     </form>
                 </div>

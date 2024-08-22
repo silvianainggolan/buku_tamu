@@ -8,6 +8,11 @@ use App\Models\Tamu;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 
+
+ // Disable registration route
+// Disable public registration route
+
+
 Route::get('/', function () {
     return view('home');
 });
@@ -54,6 +59,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::put('/update-tamu/{id}', [TamuController::class, 'update'])->name('tamu.update');
+
+    
 });
 
 require __DIR__.'/auth.php';

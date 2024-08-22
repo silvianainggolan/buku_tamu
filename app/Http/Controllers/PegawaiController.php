@@ -110,7 +110,10 @@ class PegawaiController extends Controller
      */
     public function hapus($id)
     {
+        // Find the employee by ID or fail
         $pegawai = Pegawai::findOrFail($id);
+
+        // Delete the employee
         $pegawai->delete();
 
         return redirect()->route('pegawai')->with('success', 'Data pegawai berhasil dihapus.');
