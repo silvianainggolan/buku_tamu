@@ -7,18 +7,15 @@
     <link href="{{ asset('vendor/bladewind/css/animate.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('vendor/bladewind/css/bladewind-ui.min.css') }}" rel="stylesheet" />
     <script src="{{ asset('vendor/bladewind/js/helpers.js') }}"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <style>
         body {
-            
             font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-        }
-        .bold-text {
-            font-weight: bold; 
         }
         .form-container {
             background-color: #ffffff;
@@ -27,16 +24,10 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 800px;
         }
-        .bold-text {
-            font-weight: bold; 
-        }
         .form-container h2 {
             margin-bottom: 20px;
             text-align: center;
             color: #333333;
-        }
-        .bold-text {
-            font-weight: bold; 
         }
         .form-group {
             margin-bottom: 15px;
@@ -46,18 +37,13 @@
             margin-bottom: 5px;
             color: #555555;
         }
-        .bold-text {
-            font-weight: bold; 
-        }
         .form-group input,
-        .form-group textarea {
+        .form-group textarea,
+        .form-group select {
             width: 100%;
             padding: 8px;
             border: 1px solid #dddddd;
             border-radius: 4px;
-        }
-        .bold-text {
-            font-weight: bold; 
         }
         .form-group textarea {
             resize: vertical;
@@ -72,9 +58,6 @@
             font-size: 16px;
             cursor: pointer;
         }
-        .bold-text {
-            font-weight: bold; 
-        }
         .form-group button:hover {
             background-color: #45a049;
         }
@@ -82,24 +65,21 @@
 </head>
 <body>
     <div class="form-container">
-  <center>  <img class="h-8 w-8 rounded-full" src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Dairi_Regency_Emblem.png" width="100"></center>
+        <center><img src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Dairi_Regency_Emblem.png" width="100" alt="Logo"></center>
         <h2>Formulir Tamu</h2>
         @if ($message = Session::get('success'))
-        <x-bladewind::alert
-            type="success">
+        <x-bladewind::alert type="success">
             {{ $message }}
         </x-bladewind::alert>
         @endif
 
         @if ($message = Session::get('error'))
-        <x-bladewind::alert
-            type="error">
+        <x-bladewind::alert type="error">
             {{ $message }}
         </x-bladewind::alert>
         @endif
         <form action="{{ route('tamu.simpan') }}" method="post">
-        @csrf
-            <b>
+            @csrf
             <div class="form-group">
                 <label for="name">Nama Tamu:</label>
                 <input type="text" id="name" name="nama" required>
@@ -117,7 +97,7 @@
                 <textarea id="purpose" name="keperluan" rows="4" required></textarea>
             </div>
             <div class="form-group">
-                <label for="employee-id">NIP:</label>
+                <label for="nip">NIP:</label>
                 <select id="nip" name="nip" required>
                     <option value="">Tentukan Pegawai yang akan ditemui</option>
                     @foreach ($pegawai as $item)
@@ -126,11 +106,23 @@
                 </select>
             </div>
             <div class="form-group">
+                <div class="g-recaptcha" data-sitekey="6LcMgCwqAAAAAAHBzhIr3ab6bIs8HXjKeGq82DTl"></div>
+            </div>
+            <div class="form-group">
                 <button type="submit">Submit</button>
-    </b>
-    
             </div>
         </form>
     </div>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', function(event) {
+            var response = grecaptcha.getResponse();
+            if(response.length == 0) { 
+                // reCAPTCHA belum dicentang
+                alert('Tolong selesaikan reCAPTCHA');
+                event.preventDefault(); // Mencegah pengiriman form
+            }
+        });
+    </script>
 </body>
 </html>

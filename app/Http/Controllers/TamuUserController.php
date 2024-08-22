@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tamu;
 use App\Models\Pegawai;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class TamuUserController extends Controller
 {
@@ -13,8 +14,25 @@ class TamuUserController extends Controller
         $pegawai = Pegawai::get();
         return view('user', ['pegawai' => $pegawai]);
     }
+
     public function store(Request $request)
     {
+        // Validasi reCAPTCHA
+        $recaptchaResponse = $request->input('g-recaptcha-response');
+        $secretKey = '6LcMgCwqAAAAAPPL07LkEKPxS_dDyLXd_Mie3T9t'; // Ganti dengan secret key Anda
+
+        $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+            'secret' => $secretKey,
+            'response' => $recaptchaResponse,
+            'remoteip' => $request->ip(),
+        ]);
+
+        $result = json_decode($response->body());
+
+        if (!$result->success) {
+            return back()->with('error', 'Tolong selesaikan reCAPTCHA')->withInput();
+        }
+
         // Validasi data
         $validatedData = $request->validate([
             'nama' => 'required|string|max:255',
