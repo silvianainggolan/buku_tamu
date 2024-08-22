@@ -24,7 +24,7 @@
 
         .navbar {
             background-color: rgba(44, 62, 80, 0.9);
-            padding: 1rem 2rem;
+            padding: 1rem;
             position: fixed;
             width: 100%;
             top: 0;
@@ -34,7 +34,7 @@
         .navbar .nav-link {
             color: #f8f9fa;
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-family: 'Roboto Slab', serif;
         }
 
@@ -44,14 +44,14 @@
         }
 
         .content-container {
-            position: relative;
             text-align: center;
-            margin-top: 80px;
+            margin-top: 100px;
             z-index: 1;
+            padding: 0 15px;
         }
 
         .content-container h1 {
-            font-size: 4rem;
+            font-size: 3rem;
             font-weight: 600;
             text-shadow: 4px 4px 12px rgba(0, 0, 0, 0.7);
             font-family: 'Roboto Slab', serif;
@@ -60,7 +60,7 @@
         }
 
         .content-container h2 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 400;
             margin-bottom: 0;
             color: #f0f0f0;
@@ -69,16 +69,16 @@
         }
 
         .content-container h6 {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: 300;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             color: #dcdcdc;
             font-family: 'Raleway', sans-serif;
         }
 
         .btn-tamu {
-            padding: 15px 50px;
-            font-size: 1.5rem;
+            padding: 10px 30px;
+            font-size: 1.2rem;
             background: linear-gradient(135deg, #FF5733, #C70039);
             color: #fff;
             border: none;
@@ -101,10 +101,9 @@
             background-color: rgba(44, 62, 80, 0.9);
             color: #fff;
             text-align: center;
-            position: absolute;
-            bottom: 0;
             width: 100%;
             font-family: 'Raleway', sans-serif;
+            margin-top: auto;
         }
 
         .footer a {
@@ -125,6 +124,30 @@
         @keyframes slideIn {
             from { transform: translateY(-30px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Responsif untuk tampilan mobile */
+        @media (max-width: 576px) {
+            .navbar .nav-link {
+                font-size: 0.9rem;
+            }
+
+            .content-container h1 {
+                font-size: 2.5rem;
+            }
+
+            .content-container h2 {
+                font-size: 1.8rem;
+            }
+
+            .content-container h6 {
+                font-size: 1rem;
+            }
+
+            .btn-tamu {
+                padding: 10px 25px;
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
