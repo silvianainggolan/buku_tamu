@@ -17,6 +17,8 @@ class Tamu extends Model
         'keperluan',
         'nip',
         'status',
+        'tanggal_konfirmasi',
+        'waktu_konfirmasi',
         'pesan'
     ];
 
