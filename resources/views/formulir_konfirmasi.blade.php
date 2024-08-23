@@ -13,18 +13,16 @@
                     <x-bladewind::card compact="true">
                         <div class="flex items-center">
                             <div class="grow pl-2 pt-1">
-                                <b>Tamu : {{$tamu->nama}}</b>
+                                <b>Tamu : {{ $tamu->nama }}</b>
                                 <br>
-                                <b>Pegawai yang dituju : {{$tamu->pegawai->nama}}</b>
+                                <b>Pegawai yang dituju : {{ $tamu->pegawai->nama }}</b>
                                 <div class="text-sm">{{ $tamu->nomor_handphone }}</div>
                                 <div class="text-sm">{{ $tamu->email }}</div>
                                 <div class="text-sm">Keperluan : {{ $tamu->keperluan }}</div>
                             </div>
                             <div>
-                                <a href="">
-                                    <svg>
-                                        ...
-                                    </svg>
+                                <a href="#">
+                                    <svg> ... </svg>
                                 </a>
                             </div>
                         </div>
@@ -35,13 +33,23 @@
                         @method('PUT')
 
                         <div class="mb-4">
-                            <label for="nama" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Konfirmasi ?</label>
+                            <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Konfirmasi?</label>
                             <x-bladewind::select
-                            name="status"
-                            :data="[
-                                [ 'label' => 'Konfirmasi',         'value' => 1 ],
-                                [ 'label' => 'Batal Konfirmasi',  'value' => 0 ],
-                            ]" />
+                                name="status"
+                                :data="[
+                                    [ 'label' => 'Konfirmasi', 'value' => 1 ],
+                                    [ 'label' => 'Batal Konfirmasi', 'value' => 0 ],
+                                ]" />
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="tanggal_konfirmasi" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Tanggal Konfirmasi</label>
+                            <input type="date" id="tanggal_konfirmasi" name="tanggal_konfirmasi" value="{{ old('tanggal_konfirmasi') }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="waktu_konfirmasi" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Waktu Konfirmasi</label>
+                            <input type="time" id="waktu_konfirmasi" name="waktu_konfirmasi" value="{{ old('waktu_konfirmasi') }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600">
                         </div>
 
                         <div class="mb-4">
@@ -53,6 +61,7 @@
                             Simpan
                         </button>
                     </form>
+
                 </div>
             </div>
         </div>

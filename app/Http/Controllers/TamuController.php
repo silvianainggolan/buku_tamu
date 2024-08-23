@@ -79,14 +79,20 @@ class TamuController extends Controller
     }
 
     public function konfirmasi(Request $request, $id)
-    {
-        $request->validate([
-            'status' => 'required',
-            'pesan' => 'required'
-        ]);
+{
+    $request->validate([
+        'status' => 'required|boolean',
+        'tanggal_konfirmasi' => 'required|date',
+        'waktu_konfirmasi' => 'required|date_format:H:i',
+        'pesan' => 'nullable|string',
+    ]);
 
-        $tamu = Tamu::findOrFail($id);
-        $tamu->update($request->all());
+    $tamu = Tamu::findOrFail($id);
+    $tamu->status = $request->status;
+    $tamu->tanggal_konfirmasi = $request->tanggal_konfirmasi;
+    $tamu->waktu_konfirmasi = $request->waktu_konfirmasi;
+    $tamu->pesan = $request->pesan;
+    $tamu->save();
 
         if($request->status == 1){
             $temp = "Reservasi anda dikonfirmasi!";

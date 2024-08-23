@@ -41,8 +41,8 @@
                             <th>Email</th>
                             <th>Keperluan</th>
                             <th>NIP</th>
-                            <th>Nama Pegawai</th>
-                            <th>Aksi</th>
+                            <th>waktu</th>
+                            <th>tanggal</th>
                         </x-slot>
                         
                         @forelse ($tamu as $item)
@@ -65,7 +65,9 @@
                                 <td>{{ $item->email }}</td>
                                 <td>{{ $item->keperluan }}</td>
                                 <td>{{ $item->nip }}</td>
-                                <td>{{ $item->pegawai->nama ?? 'N/A' }}</td>
+                                <td>{{ $item->waktu_konfirmasi }}</td>
+                                <td>{{ $item->tanggal_konfirmasi }}</td>
+                                <td>{{ $item->tahun->nama ?? 'N/A' }}</td>
                                 <td>
                                     <a href="{{ route('tamu.konfirmasi', $item->id) }}" class="btn btn-sm btn-primary">
                                         <x-bladewind::button color="green">KONFIRMASI</x-bladewind::button>
