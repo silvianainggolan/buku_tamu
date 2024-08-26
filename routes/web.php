@@ -69,7 +69,7 @@ Route::delete('/events/{id}', [EventController::class, 'destroy']);
 Route::get('/events', [EventController::class, 'index']);
 // Di web.php atau api.php
 Route::resource('events', EventController::class);
-Route::get('/pegawai', [PegawaiController::class, 'index']);
+
 
 
 
