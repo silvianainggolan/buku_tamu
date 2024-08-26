@@ -3,16 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Pegawai;
 use App\Models\User;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
 class AdminController extends Controller
 {
+    public function dashboard()
+    {
+        $pegawai = Pegawai::get();
+        return view('dashboard', compact('pegawai'));
+
+    }
     public function index()
     {
         $admins = User::all();
         $logged_user = \Auth::user();
+
         return view('admins.index', compact('admins', 'logged_user'));
     }
 

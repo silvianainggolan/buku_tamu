@@ -10,31 +10,27 @@ class EventController extends Controller
 {
     public function index(Request $request)
     {
-        // Ambil parameter pencarian dari request
-        $search = $request->input('search');
+        $search = $request->input('pegawai_id'); // Ubah menjadi 'pegawai_id' sesuai parameter pencarian
 
-        // Ambil data tamu dengan relasi pegawai
         $query = Tamu::with('pegawai');
 
-        // Jika ada parameter pencarian, filter berdasarkan nama pegawai
         if ($search) {
             $query->whereHas('pegawai', function($q) use ($search) {
-                $q->where('nama', 'like', "%{$search}%");
+                $q->where('id', $search); // Filter berdasarkan ID pegawai
             });
         }
 
         $tamu = $query->get();
 
-        // Map data tamu ke format event
         $events = $tamu->map(function ($item) {
             return [
                 'id' => $item->id,
                 'title' => $item->nama . ' (' . ($item->status == 0 ? 'Belum Dikonfirmasi' : 'Dikonfirmasi') . ')',
                 'start' => $item->tanggal_konfirmasi . 'T' . $item->waktu_konfirmasi,
-                'end' => $item->tanggal_konfirmasi . 'T' . $item->waktu_konfirmasi, 
-                'description' => $item->pesan, // Menambahkan pesan
-                'keperluan' => $item->keperluan, // Menambahkan keperluan
-                'pegawai' => $item->pegawai ? $item->pegawai->nama : 'Tidak Diketahui', // Menambahkan nama pegawai
+                'end' => $item->tanggal_konfirmasi . 'T' . $item->waktu_konfirmasi,
+                'description' => $item->pesan,
+                'keperluan' => $item->keperluan,
+                'pegawai' => $item->pegawai ? $item->pegawai->nama : 'Tidak Diketahui',
                 'className' => $item->status == 0 ? 'status-belum' : 'status-dikonfirmasi',
             ];
         });
@@ -49,9 +45,9 @@ class EventController extends Controller
             'start' => 'required|date_format:Y-m-dTH:i:s',
             'end' => 'required|date_format:Y-m-dTH:i:s',
             'description' => 'nullable|string',
-            'pegawai_id' => 'required|exists:pegawai,id', // Validasi pegawai_id
-            'keperluan' => 'nullable|string', // Validasi keperluan
-            'status' => 'required|integer|in:0,1', // Validasi status
+            'pegawai_id' => 'required|exists:pegawai,id',
+            'keperluan' => 'nullable|string',
+            'status' => 'required|integer|in:0,1',
         ]);
 
         $event = Tamu::create([
@@ -100,5 +96,11 @@ class EventController extends Controller
         $event->delete();
 
         return response()->json(['success' => true]);
+    }
+
+    public function getPegawai()
+    {
+        $pegawai = Pegawai::all(); // Ambil semua pegawai
+        return response()->json($pegawai); // Kembalikan dalam format JSON
     }
 }

@@ -12,7 +12,13 @@
                     <!-- Filter Pegawai -->
                     <div class="mb-4">
                         <div class="d-flex align-items-center">
-                            <input type="text" class="form-control me-2" id="pegawaiSearch" placeholder="Ketik nama pegawai...">
+                            <select class="form-control me-2" id="pegawaiDropdown">
+                                <option value="">Pilih Pegawai</option>
+                                @foreach($pegawai as $item)
+                                <option value="{{ $item['id'] }}">{{ $item['nama'] }}</option>
+                                @endforeach
+                                <!-- Options will be loaded here dynamically -->
+                            </select>
                             <button class="btn btn-primary" id="searchButton">Cari</button>
                         </div>
                     </div>
@@ -56,58 +62,69 @@
 
     <script>
     $(document).ready(function() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        function loadEvents(searchTerm = '') {
-            $('#calendar').fullCalendar('removeEvents'); // Clear existing events
-
-            $.get('/events', { search: searchTerm }, function(events) {
-                if (events.length === 0) {
-                    alert('Maaf, nama pegawai tidak ditemukan.');
-                } else {
-                    $('#calendar').fullCalendar('addEventSource', events);
-                }
-            });
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
-
-        loadEvents(); // Initial load
-
-        $('#searchButton').on('click', function() {
-            var searchTerm = $('#pegawaiSearch').val();
-            loadEvents(searchTerm);
-        });
-
-        $('#pegawaiSearch').on('keyup', function(e) {
-            if (e.key === 'Enter') { // Trigger search on Enter key press
-                $('#searchButton').click();
-            }
-        });
-
-        var calendar = $('#calendar').fullCalendar({
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'month,agendaWeek,agendaDay'
-            },
-            selectable: true,
-            selectHelper: true,
-            defaultView: 'month',
-            editable: true,
-            eventLimit: true,
-
-            eventClick: function(event) {
-                $('#eventDetailTitle').text(event.title);
-                $('#eventDetailDescription').text(event.description);
-                $('#eventDetailStart').text(event.start.format('YYYY-MM-DD HH:mm'));
-                $('#eventDetailEnd').text(event.end ? event.end.format('YYYY-MM-DD HH:mm') : 'Tidak Diketahui');
-                $('#eventDetailPegawai').text(event.pegawai || 'Tidak Diketahui');
-                $('#eventDetailModal').modal('show');
-            }
-        });
     });
+
+    // Load Pegawai for dropdown
+    function loadPegawai() {
+        $.get('/pegawai', function(data) {
+            var options = '<option value="">Pilih Pegawai</option>';
+            data.forEach(function(pegawai) {
+                options += '<option value="' + pegawai.id + '">' + pegawai.nama + '</option>';
+            });
+            $('#pegawaiDropdown').html(options);
+        });
+    }
+
+    loadPegawai(); // Load dropdown options on page load
+
+    function loadEvents(pegawaiId = '') {
+        $('#calendar').fullCalendar('removeEvents'); // Clear existing events
+
+        $.get('/events', { pegawai_id: pegawaiId }, function(events) {
+            if (events.length === 0) {
+                $('#calendar').fullCalendar('addEventSource', []);
+                alert('Maaf, jadwal untuk pegawai ini tidak ditemukan.');
+            } else {
+                $('#calendar').fullCalendar('addEventSource', events);
+            }
+        });
+    }
+
+    // Initial load of events
+    loadEvents(); 
+
+    // Update calendar when dropdown changes
+    $('#pegawaiDropdown').on('change', function() {
+        var pegawaiId = $(this).val();
+        loadEvents(pegawaiId);
+    });
+
+    var calendar = $('#calendar').fullCalendar({
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+        },
+        selectable: true,
+        selectHelper: true,
+        defaultView: 'month',
+        editable: true,
+        eventLimit: true,
+
+        eventClick: function(event) {
+            $('#eventDetailTitle').text(event.title);
+            $('#eventDetailDescription').text(event.description);
+            $('#eventDetailStart').text(event.start.format('YYYY-MM-DD HH:mm'));
+            $('#eventDetailEnd').text(event.end ? event.end.format('YYYY-MM-DD HH:mm') : 'Tidak Diketahui');
+            $('#eventDetailPegawai').text(event.pegawai || 'Tidak Diketahui');
+            $('#eventDetailModal').modal('show');
+        }
+    });
+});
+
     </script>
 </x-app-layout>

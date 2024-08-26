@@ -17,9 +17,8 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/dashboard', [AdminController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/pegawai', [PegawaiController::class, 'index'])->middleware(['auth', 'verified'])->name('pegawai');
 Route::get('/tambah-pegawai', [PegawaiController::class, 'tambah'])->middleware(['auth', 'verified'])->name('pegawai.tambah');
@@ -69,6 +68,7 @@ Route::delete('/events/{id}', [EventController::class, 'destroy']);
 Route::get('/events', [EventController::class, 'index']);
 // Di web.php atau api.php
 Route::resource('events', EventController::class);
+
 
 
 
