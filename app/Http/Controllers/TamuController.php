@@ -79,44 +79,44 @@ class TamuController extends Controller
     }
 
     public function konfirmasi(Request $request, $id)
-{
-    $request->validate([
-        'status' => 'required|boolean',
-        'tanggal_konfirmasi' => 'required|date',
-        'waktu_konfirmasi' => 'required|date_format:H:i',
-        'pesan' => 'nullable|string',
-    ]);
-
-    $tamu = Tamu::findOrFail($id);
-    $tamu->status = $request->status;
-    $tamu->tanggal_konfirmasi = $request->tanggal_konfirmasi;
-    $tamu->waktu_konfirmasi = $request->waktu_konfirmasi;
-    $tamu->pesan = $request->pesan;
-    $tamu->save();
-
-        if($request->status == 1){
-            $temp = "Reservasi anda dikonfirmasi!";
-        }else{
-            $temp = "Reservasi anda tidak dikonfirmasi!";
+    {
+        $request->validate([
+            'status' => 'required|boolean',
+            'tanggal_konfirmasi' => 'required|date',
+            'waktu_konfirmasi' => 'required|date_format:H:i',
+            'pesan' => 'nullable|string',
+        ]);
+    
+        $tamu = Tamu::findOrFail($id);
+    
+        // Cek apakah pegawai sudah memiliki jadwal pada waktu yang sama
+        $existingSchedule = Tamu::where('nip', $tamu->nip)
+            ->where('tanggal_konfirmasi', $request->tanggal_konfirmasi)
+            ->where('waktu_konfirmasi', $request->waktu_konfirmasi)
+            ->where('status', 1) // Hanya cek untuk jadwal yang sudah dikonfirmasi
+            ->first();
+    
+        if ($existingSchedule) {
+            return redirect()->route('tamu')->with('error', 'Pegawai sudah memiliki jadwal dengan tamu lain pada waktu tersebut.');
         }
-
+    
+        $tamu->status = $request->status;
+        $tamu->tanggal_konfirmasi = $request->tanggal_konfirmasi;
+        $tamu->waktu_konfirmasi = $request->waktu_konfirmasi;
+        $tamu->pesan = $request->pesan;
+        $tamu->save();
+    
+        $temp = $request->status == 1 ? "Reservasi anda dikonfirmasi!" : "Reservasi anda tidak dikonfirmasi!";
         $data = [
             'name' => $temp,
             'body' => $request->pesan
         ];
-       
+    
         Mail::to($tamu->email)->send(new SendEmail($data));
-
+    
         return redirect()->route('tamu')->with('success', 'Berhasil mengkonfirmasi data tamu.');
     }
-
-    public function hapus($id)
-    {
-        $tamu = Tamu::findOrFail($id);
-        $tamu->delete();
-
-        return redirect()->route('tamu')->with('success', 'Data tamu berhasil dihapus.');
-    }
+    
 
     public function formKonfirmasi($id)
     {
