@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\TamuUserController;
 use App\Http\Controllers\TamuController;
 use App\Http\Controllers\PegawaiController;
@@ -59,6 +59,20 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::put('/update-tamu/{id}', [TamuController::class, 'update'])->name('tamu.update');
+
+
+    Route::get('/events', [EventController::class, 'getEvents']);
+    Route::post('/events', [EventController::class, 'store']);
+Route::patch('/events/{id}', [EventController::class, 'update']);
+Route::delete('/events/{id}', [EventController::class, 'destroy']);
+// routes/web.php
+Route::get('/events', [EventController::class, 'index']);
+// Di web.php atau api.php
+Route::resource('events', EventController::class);
+Route::get('/pegawai', [PegawaiController::class, 'index']);
+
+
+
 
     
 });

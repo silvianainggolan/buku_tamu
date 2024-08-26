@@ -19,11 +19,14 @@ class Tamu extends Model
         'status',
         'tanggal_konfirmasi',
         'waktu_konfirmasi',
-        'pesan'
+        'pesan',
+        'pegawai_id',
+       
     ];
 
     public function pegawai()
     {
         return $this->belongsTo(Pegawai::class, 'nip', 'nip');
+        return $this->belongsTo(Pegawai::class);
     }
 }
