@@ -9,6 +9,14 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <!-- Filter Pegawai -->
+                    <div class="mb-4">
+                        <div class="d-flex align-items-center">
+                            <input type="text" class="form-control me-2" id="pegawaiSearch" placeholder="Ketik nama pegawai...">
+                            <button class="btn btn-primary" id="searchButton">Cari</button>
+                        </div>
+                    </div>
+                    
                     <!-- Kalender -->
                     <div id='calendar'></div>
                 </div>
@@ -28,8 +36,7 @@
                     <p><strong>Tamu:</strong> <span id="eventDetailTitle"></span></p>
                     <p><strong>Deskripsi:</strong> <span id="eventDetailDescription"></span></p>
                     <p><strong>Mulai:</strong> <span id="eventDetailStart"></span></p>
-                    <p><strong>Pegawai yang dituju :</strong> <span id="eventDetailPegawai"></span></p>
-                    
+                    <p><strong>Pegawai yang dituju:</strong> <span id="eventDetailPegawai"></span></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
@@ -37,9 +44,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Add Event Modal -->
-    
 
     <!-- FullCalendar and Bootstrap CSS & JS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -58,17 +62,30 @@
             }
         });
 
-        function loadPegawai() {
-            $.get('/pegawai', function(data) {
-                var options = '<option value="">Pilih Pegawai</option>';
-                data.forEach(function(pegawai) {
-                    options += '<option value="' + pegawai.id + '">' + pegawai.nama + '</option>';
-                });
-                $('#eventPegawai').html(options);
+        function loadEvents(searchTerm = '') {
+            $('#calendar').fullCalendar('removeEvents'); // Clear existing events
+
+            $.get('/events', { search: searchTerm }, function(events) {
+                if (events.length === 0) {
+                    alert('Maaf, nama pegawai tidak ditemukan.');
+                } else {
+                    $('#calendar').fullCalendar('addEventSource', events);
+                }
             });
         }
 
-        loadPegawai();
+        loadEvents(); // Initial load
+
+        $('#searchButton').on('click', function() {
+            var searchTerm = $('#pegawaiSearch').val();
+            loadEvents(searchTerm);
+        });
+
+        $('#pegawaiSearch').on('keyup', function(e) {
+            if (e.key === 'Enter') { // Trigger search on Enter key press
+                $('#searchButton').click();
+            }
+        });
 
         var calendar = $('#calendar').fullCalendar({
             header: {
@@ -81,45 +98,6 @@
             defaultView: 'month',
             editable: true,
             eventLimit: true,
-            events: '/events',
-
-            select: function(start, end) {
-                $('#eventModal').modal('show');
-                $('#eventStart').val(start.format());
-                $('#eventEnd').val(end.format());
-                $('#eventTitle').val('');
-                $('#eventDescription').val('');
-                $('#eventPegawai').val('');
-                $('#saveEvent').off('click').on('click', function() {
-                    var title = $('#eventTitle').val();
-                    var description = $('#eventDescription').val();
-                    var pegawai_id = $('#eventPegawai').val();
-                    if (title) {
-                        var eventData = {
-                            title: title,
-                            start: $('#eventStart').val(),
-                            end: $('#eventEnd').val(),
-                            description: description,
-                            pegawai_id: pegawai_id
-                        };
-                        $.post('/events', eventData, function(response) {
-                            calendar.fullCalendar('renderEvent', {
-                                id: response.id,
-                                title: response.title,
-                                start: response.start,
-                                end: response.end,
-                                description: response.description,
-                                pegawai: response.pegawai // Menyertakan pegawai
-                            }, true);
-                            $('#eventModal').modal('hide');
-                        }).fail(function() {
-                            alert('Gagal menambahkan jadwal!');
-                        });
-                    }
-                });
-
-                calendar.fullCalendar('unselect');
-            },
 
             eventClick: function(event) {
                 $('#eventDetailTitle').text(event.title);
@@ -132,5 +110,4 @@
         });
     });
     </script>
-
 </x-app-layout>
