@@ -39,8 +39,8 @@
                             <th>Email</th>
                             <th>Keperluan</th>
                             <th>NIP</th>
-                            <th>waktu</th>
-                            <th>tanggal</th>
+                            <th>tanggal / waktu permohonan</th>
+                            <th>tanggal / waktu berkunjung</th>
                         </x-slot>
                         
                         @forelse ($tamu as $item)
@@ -63,8 +63,8 @@
                                 <td>{{ $item->email }}</td>
                                 <td>{{ $item->keperluan }}</td>
                                 <td>{{ $item->nip }}</td>
-                                <td>{{ $item->waktu_konfirmasi }}</td>
-                                <td>{{ $item->tanggal_konfirmasi }}</td>
+                                <td>{{ $item->tanggal_berkunjung}} <br>{{ $item->jam_berkunjung}}</td>
+                                <td>{{ $item->tanggal_konfirmasi }} <br>{{ $item->waktu_konfirmasi }}</td>
                                 <td>{{ $item->tahun->nama ?? 'N/A' }}</td>
                                 <td>
                                     <a href="{{ route('tamu.konfirmasi', $item->id) }}" class="btn btn-sm btn-primary">

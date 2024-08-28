@@ -36,6 +36,15 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="form-group">
+    <label for="tanggal_berkunjung">Tanggal Berkunjung:</label>
+    <input type="date" name="tanggal_berkunjung" id="tanggal_berkunjung" class="form-control" value="{{ old('tanggal_berkunjung', $tamu->tanggal_berkunjung ?? '') }}" required>
+</div>
+<div class="form-group">
+    <label for="jam_berkunjung">Jam Berkunjung:</label>
+    <input type="time" name="jam_berkunjung" id="jam_berkunjung" class="form-control" value="{{ old('jam_berkunjung', $tamu->jam_berkunjung ?? '') }}" required>
+</div>
+
                         <button type="submit" class="submit-btn">Simpan</button>
                     </form>
                 </div>

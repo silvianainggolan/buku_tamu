@@ -21,6 +21,8 @@ class Tamu extends Model
         'waktu_konfirmasi',
         'pesan',
         'pegawai_id',
+        'tanggal_berkunjung',
+        'jam_berkunjung'
        
     ];
 

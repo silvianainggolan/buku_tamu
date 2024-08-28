@@ -106,6 +106,17 @@
                 </select>
             </div>
             <div class="form-group">
+                <label for="tanggal_berkunjung">Tanggal Berkunjung:</label>
+                <input type="date" class="form-control" id="tanggal_berkunjung" name="tanggal_berkunjung" value="{{ old('tanggal_berkunjung') }}" required>
+                @error('tanggal_berkunjung')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="jam_berkunjung">Jam Berkunjung:</label>
+                <input type="time" class="form-control" id="jam_berkunjung" name="jam_berkunjung" value="{{ old('jam_berkunjung') }}" required></script>
+            <div class="form-group">
                 <div class="g-recaptcha" data-sitekey="6LcMgCwqAAAAAAHBzhIr3ab6bIs8HXjKeGq82DTl"></div>
             </div>
             <div class="form-group">
