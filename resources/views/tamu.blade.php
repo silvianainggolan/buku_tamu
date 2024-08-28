@@ -38,7 +38,7 @@
                             <th>No Handphone</th>
                             <th>Email</th>
                             <th>Keperluan</th>
-                            <th>NIP</th>
+                            <th>pegawai</th>
                             <th>tanggal / waktu permohonan</th>
                             <th>tanggal / waktu berkunjung</th>
                         </x-slot>
@@ -62,7 +62,7 @@
                                 <td>{{ $item->nomor_handphone }}</td>
                                 <td>{{ $item->email }}</td>
                                 <td>{{ $item->keperluan }}</td>
-                                <td>{{ $item->nip }}</td>
+                                <td>{{ $item->nip }}<br>{{$item->pegawai->nama}} </td> 
                                 <td>{{ $item->tanggal_berkunjung}} <br>{{ $item->jam_berkunjung}}</td>
                                 <td>{{ $item->tanggal_konfirmasi }} <br>{{ $item->waktu_konfirmasi }}</td>
                                 <td>{{ $item->tahun->nama ?? 'N/A' }}</td>

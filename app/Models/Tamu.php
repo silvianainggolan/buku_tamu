@@ -29,6 +29,6 @@ class Tamu extends Model
     public function pegawai()
     {
         return $this->belongsTo(Pegawai::class, 'nip', 'nip');
-        return $this->belongsTo(Pegawai::class);
+        
     }
 }
