@@ -33,14 +33,13 @@
                         @method('PUT')
 
                         <div class="mb-4">
-                            <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Konfirmasi?</label>
-                            <x-bladewind::select
-                                name="status"
-                                :data="[
-                                    [ 'label' => 'Konfirmasi', 'value' => 1 ],
-                                    [ 'label' => 'Batal Konfirmasi', 'value' => 0 ],
-                                ]" />
-                        </div>
+    <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Konfirmasi?</label>
+    <select id="status" name="status" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600">
+        <option value="1" {{ old('status', $tamu->status) == 1 ? 'selected' : '' }}>Konfirmasi</option>
+        <option value="0" {{ old('status', $tamu->status) == 0 ? 'selected' : '' }}>Belum Dikonfirmasi</option>
+    </select>
+</div>
+
 
                         <div class="mb-4">
                             <label for="tanggal_konfirmasi" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Tanggal Konfirmasi</label>
@@ -57,9 +56,10 @@
                             <input type="text" id="pesan" name="pesan" value="{{ old('pesan', $tamu->pesan) }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600">
                         </div>
 
-                        <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            Simpan
-                        </button>
+                        <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+    Simpan
+</button>
+
                     </form>
 
                 </div>
