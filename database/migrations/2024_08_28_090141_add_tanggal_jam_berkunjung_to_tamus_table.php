@@ -9,7 +9,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('tamus', function (Blueprint $table) {
-            $table->date('tanggal_berkunjung')
+            $table->date('tanggal_berkunjung')->nullable()
             ->after('keperluan');
             $table->time('jam_berkunjung')->nullable()->after('tanggal_berkunjung');
         });
