@@ -48,18 +48,30 @@
         .form-group textarea {
             resize: vertical;
         }
+        .form-group .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
         .form-group button {
-            width: 100%;
             padding: 10px;
             border: none;
             border-radius: 4px;
-            background-color: #4CAF50;
             color: white;
             font-size: 16px;
             cursor: pointer;
+            width: 48%;
         }
-        .form-group button:hover {
+        .form-group button[type="submit"] {
+            background-color: #4CAF50;
+        }
+        .form-group button[type="submit"]:hover {
             background-color: #45a049;
+        }
+        .form-group button[type="button"] {
+            background-color: #f44336;
+        }
+        .form-group button[type="button"]:hover {
+            background-color: #e53935;
         }
     </style>
 </head>
@@ -108,8 +120,9 @@
             <div class="form-group">
                 <div class="g-recaptcha" data-sitekey="6LcMgCwqAAAAAAHBzhIr3ab6bIs8HXjKeGq82DTl"></div>
             </div>
-            <div class="form-group">
+            <div class="form-group button-container">
                 <button type="submit">Submit</button>
+                <button type="button" onclick="window.location.href='{{ url('/') }}'">Cancel</button>
             </div>
         </form>
     </div>
