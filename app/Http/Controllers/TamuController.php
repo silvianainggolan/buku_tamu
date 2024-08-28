@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tamu;
-use App\Models\Pegawai; // Pastikan ini diimpor
+use App\Models\Pegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendEmail;
@@ -15,7 +15,6 @@ class TamuController extends Controller
         // Ambil parameter pencarian dari query string
         $search = $request->input('search');
         
-
         // Query untuk mendapatkan data tamu dengan kondisi pencarian
         $query = Tamu::query();
 
@@ -117,11 +116,17 @@ class TamuController extends Controller
         return redirect()->route('tamu')->with('success', 'Berhasil mengkonfirmasi data tamu.');
     }
     
-
     public function formKonfirmasi($id)
     {
         $tamu = Tamu::findOrFail($id);
-
         return view('formulir_konfirmasi', ['tamu' => $tamu]);
+    }
+
+    public function hapus($id)
+    {
+        $tamu = Tamu::findOrFail($id);
+        $tamu->delete();
+
+        return redirect()->route('tamu')->with('success', 'Data tamu berhasil dihapus.');
     }
 }
