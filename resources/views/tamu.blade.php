@@ -16,20 +16,18 @@
 
                     <!-- Form Pencarian -->
                     <form method="GET" action="{{ route('tamu') }}" class="my-4 flex">
-    <input
-        name="search"
-        type="text"
-        placeholder="Cari berdasarkan nama, no handphone, email..."
-        value="{{ request('search') }}"
-        style="color: black;" 
-        class="flex-1 mr-2 border border-gray-300 rounded px-3 py-2"
-    />
-    <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded">
-        Cari
-    </button>
-</form>
-
-                    
+                        <input
+                            name="search"
+                            type="text"
+                            placeholder="Cari berdasarkan nama, no handphone, email..."
+                            value="{{ request('search') }}"
+                            style="color: black;" 
+                            class="flex-1 mr-2 border border-gray-300 rounded px-3 py-2"
+                        />
+                        <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded">
+                            Cari
+                        </button>
+                    </form>
 
                     <!-- Tabel Tamu -->
                     <x-bladewind::table>
@@ -50,13 +48,13 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>
                                     @if ($item->status == 0)
-                                    <x-bladewind::tag label="Belum Dikonfirmasi" color="red" />    
+                                        <x-bladewind::tag label="Belum Dikonfirmasi" color="red" />    
                                     @else
-                                    <x-bladewind::tag label="Dikonfirmasi" color="green" />
+                                        <x-bladewind::tag label="Dikonfirmasi" color="green" />
                                     @endif
 
                                     @if (isset($item->pesan))
-                                    <br>
+                                        <br>
                                         <small>{{ $item->pesan }}</small>
                                     @endif
                                 </td>
@@ -75,10 +73,11 @@
                                     <a href="{{ route('tamu.edit', $item->id) }}" class="btn btn-sm btn-primary">
                                         <x-bladewind::button color="yellow">EDIT</x-bladewind::button>
                                     </a>
-                                    <form action="{{ route('tamu.hapus', $item->id) }}" method="POST" style="display:inline-block;">
+                                    <!-- Custom Delete Form -->
+                                    <form action="{{ route('tamu.hapus', $item->id) }}" method="POST" style="display:inline-block;" class="delete-form">
                                         @csrf
                                         @method('DELETE')
-                                        <x-bladewind::button can_submit="true" color="red" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">HAPUS</x-bladewind::button>
+                                        <x-bladewind::button color="red" class="delete-btn" data-id="{{ $item->id }}">HAPUS</x-bladewind::button>
                                     </form>
                                 </td>
                             </tr>
@@ -97,4 +96,49 @@
             </div>
         </div>
     </div>
+
+    <!-- SweetAlert CSS Customization -->
+    <style>
+        .swal-modal {
+            font-family: sans-serif;
+        }
+
+        .swal-text {
+            text-align: center;
+        }
+    </style>
+
+    <!-- Include SweetAlert JavaScript Library -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <!-- Custom SweetAlert JavaScript for Delete Confirmation -->
+    <script>
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                const form = this.closest('form');
+                swal({
+                    title: "Apakah Anda yakin ingin menghapus?",
+                    text: "Data ini tidak dapat dipulihkan setelah dihapus.",
+                    icon: "warning",
+                    buttons: {
+                        cancel: "Batal",
+                        confirm: {
+                            text: "Hapus",
+                            value: true,
+                            visible: true,
+                            className: "swal-button--confirm",
+                            closeModal: true
+                        }
+                    },
+                    dangerMode: true,
+                    closeOnClickOutside: false
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    </script>
 </x-app-layout>
