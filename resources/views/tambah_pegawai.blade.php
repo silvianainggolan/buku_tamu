@@ -47,7 +47,7 @@
 
                         <div class="flex gap-4 mt-6">
                             <x-bladewind::button can_submit="true" color="green" class="px-6 py-3 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition">
-                                SUBMIT
+                                SIMPAN
                             </x-bladewind::button>
                             <x-bladewind::button color="red" onclick="window.history.back()" class="px-6 py-3 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition">
                                 BATAL

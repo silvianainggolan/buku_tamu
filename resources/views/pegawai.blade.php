@@ -35,47 +35,53 @@
                             value="{{ request('search') }}"
                             class="flex-1 mr-2 border border-gray-300 rounded px-3 py-2"
                         />
-                        <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded">
+                        <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
                             Cari
                         </button>
                     </form>
 
-                    <x-bladewind::table>
-                        <x-slot name="header">
-                            <th>No</th>
-                            <th>Nama</th>
-                            <th>NIP</th>
-                            <th>No HP</th>
-                            <th>Email</th>
-                            <th>Jabatan</th>
-                            <th>Action</th>
-                        </x-slot>
-                        @foreach ($pegawai as $item)
-                     
-                        <tr>
-                           
-                            <td>{{ $item['nama'] }}</td>
-                            <td>{{ $item['nip'] }}</td>
-                            <td>{{ $item['nomor_handphone'] }}</td>
-                            <td>{{ $item['email'] }}</td>
-                            <td>{{ $item['jabatan'] }}</td>
-                            <td class="flex space-x-2">
-                                <a href="{{ route('pegawai.edit', $item['id']) }}">
-                            <td>
-                                <a href="{{ route('pegawai.edit', $item['id']) }}" class="btn btn-sm btn-primary">
-                                    <x-bladewind::button color="yellow">EDIT</x-bladewind::button>
-                                </a>
-                                @if($item['jumlah_terjadwal'] == 0)
-                                <form action="{{ route('pegawai.hapus', $item['id']) }}" method="POST" style="display:inline-block;" class="delete-form">
-                                    @csrf
-                                    @method('DELETE')
-                                    <x-bladewind::button type="button" color="red" class="delete-btn text-white bg-red-500">HAPUS</x-bladewind::button>
-                                </form>
-                                @endif
-                            </td>
-                        </tr>
-                        @endforeach
-                    </x-bladewind::table>
+                    <!-- Tabel Pegawai dengan Scroll Horizontal -->
+                    <div class="overflow-x-auto mt-6">
+                        <table class="min-w-full divide-y divide-gray-200 bg-gray-50 shadow-md rounded-lg">
+                            <thead class="bg-gray-200">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">No</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Nama</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">NIP</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">No HP</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Email</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Jabatan</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                @foreach ($pegawai as $index => $item)
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $pegawai->firstItem() + $index }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $item['nama'] }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $item['nip'] }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $item['nomor_handphone'] }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $item['email'] }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $item['jabatan'] }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex space-x-2">
+                                            <a href="{{ route('pegawai.edit', $item['id']) }}">
+                                                <x-bladewind::button color="yellow" class="hover:bg-yellow-500">EDIT</x-bladewind::button>
+                                            </a>
+                                            @if($item['jumlah_terjadwal'] == 0)
+                                            <form action="{{ route('pegawai.hapus', $item['id']) }}" method="POST" style="display:inline-block;" class="delete-form">
+                                                @csrf
+                                                @method('DELETE')
+                                                <x-bladewind::button type="button" color="red" class="text-white hover:bg-red-600 delete-btn">HAPUS</x-bladewind::button>
+                                            </form>
+                                            @endif
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
 
                     <!-- Pagination -->
                     <div class="mt-4 flex items-center justify-between">
@@ -85,4 +91,38 @@
             </div>
         </div>
     </div>
+
+    <!-- Include SweetAlert JavaScript Library -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <!-- Custom SweetAlert JavaScript for Delete Confirmation -->
+    <script>
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                const form = this.closest('form');
+                swal({
+                    title: "Apakah Anda yakin ingin menghapus?",
+                    text: "Data ini tidak dapat dipulihkan setelah dihapus.",
+                    icon: "warning",
+                    buttons: {
+                        cancel: "Batal",
+                        confirm: {
+                            text: "Hapus",
+                            value: true,
+                            visible: true,
+                            className: "swal-button--confirm",
+                            closeModal: true
+                        }
+                    },
+                    dangerMode: true,
+                    closeOnClickOutside: false
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    </script>
 </x-app-layout>
