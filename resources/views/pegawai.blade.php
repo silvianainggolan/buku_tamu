@@ -9,6 +9,20 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <!-- Tambahkan bagian ini untuk menampilkan pesan sukses atau error -->
+                    @if(session('success'))
+                        <div class="bg-green-100 text-green-800 p-4 rounded mb-4">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    @if(session('error'))
+                        <div class="bg-red-100 text-red-800 p-4 rounded mb-4">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+                    <!-- Akhir dari bagian pesan sukses atau error -->
+
                     <a href="{{ route('pegawai.tambah') }}">
                         <x-bladewind::button color="green">TAMBAH</x-bladewind::button>
                     </a>
@@ -36,24 +50,28 @@
                             <th>Jabatan</th>
                             <th>Action</th>
                         </x-slot>
-                        @foreach ($pegawai as $index => $item)
+                        @foreach ($pegawai as $item)
+                     
                         <tr>
-                            <td>{{ $pegawai->firstItem() + $index }}</td>
+                           
                             <td>{{ $item['nama'] }}</td>
                             <td>{{ $item['nip'] }}</td>
                             <td>{{ $item['nomor_handphone'] }}</td>
                             <td>{{ $item['email'] }}</td>
                             <td>{{ $item['jabatan'] }}</td>
+                            <td class="flex space-x-2">
+                                <a href="{{ route('pegawai.edit', $item['id']) }}">
                             <td>
                                 <a href="{{ route('pegawai.edit', $item['id']) }}" class="btn btn-sm btn-primary">
                                     <x-bladewind::button color="yellow">EDIT</x-bladewind::button>
                                 </a>
+                                @if($item['jumlah_terjadwal'] == 0)
                                 <form action="{{ route('pegawai.hapus', $item['id']) }}" method="POST" style="display:inline-block;" class="delete-form">
                                     @csrf
                                     @method('DELETE')
-                                    <x-bladewind::button type="button" color="red" class="text-white">HAPUS</x-bladewind::button>
-
+                                    <x-bladewind::button type="button" color="red" class="delete-btn text-white bg-red-500">HAPUS</x-bladewind::button>
                                 </form>
+                                @endif
                             </td>
                         </tr>
                         @endforeach
