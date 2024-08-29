@@ -45,7 +45,8 @@
     <input type="time" name="jam_berkunjung" id="jam_berkunjung" class="form-control" value="{{ old('jam_berkunjung', $tamu->jam_berkunjung ?? '') }}" required>
 </div>
 
-                        <button type="submit" class="submit-btn">Simpan</button>
+                       
+                        <x-bladewind::button can_submit="true" color="green">SIMPAN</x-bladewind::button>
                     </form>
                 </div>
             </div>

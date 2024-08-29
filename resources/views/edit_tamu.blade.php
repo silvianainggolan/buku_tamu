@@ -55,8 +55,7 @@
                             </select>
                         </div>
 
-                        <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            Edit Tamu
+                        <x-bladewind::button can_submit="true" color="yellow">EDIT TAMU</x-bladewind::button>
                         </button>
                     </form>
                 </div>
