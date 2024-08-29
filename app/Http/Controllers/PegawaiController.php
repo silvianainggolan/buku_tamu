@@ -5,20 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pegawai;
 use Illuminate\View\View;
-use Illuminate\Support\Facades\Redirect;
-use App\Models\Tamu;
 
 class PegawaiController extends Controller
 {
     /**
      * Menampilkan daftar pegawai dengan pencarian opsional.
      */
-    public function index(Request $request)
+    public function index(Request $request): View
     {
-        // Ambil parameter pencarian dari query string
         $search = $request->input('search');
-        
-        // Query untuk mendapatkan data pegawai dengan kondisi pencarian
         $query = Pegawai::query();
 
         if ($search) {
@@ -49,25 +44,24 @@ class PegawaiController extends Controller
      */
     public function simpan(Request $request)
     {
-        // Validasi input
         $request->validate([
-            'nama' => 'required',
-            'nip' => 'required|min:5',
-            'nomor_handphone' => 'required',
-            'email' => 'required|email',
-            'jabatan' => 'required'
+            'nama' => 'required|string|max:255',
+            'nip' => 'required|string|max:255|unique:pegawai,nip',
+            'nomor_handphone' => 'required|string|max:15|unique:pegawai,nomor_handphone',
+            'email' => 'required|string|email|max:255|unique:pegawai,email',
+            'jabatan' => 'required|string|max:255',
+        ], [
+            'nip.unique' => 'NIP sudah terdaftar.',
+            'nomor_handphone.unique' => 'Nomor handphone sudah digunakan.',
+            'email.unique' => 'Email sudah digunakan.',
         ]);
 
-        // Simpan data pegawai
-        $pegawai = Pegawai::create($request->only([
-            'nama',
-            'nip',
-            'nomor_handphone',
-            'email',
-            'jabatan'
-        ]));
-
-        return redirect()->route('pegawai')->with('success', 'Berhasil menambahkan data pegawai.');
+        try {
+            Pegawai::create($request->all());
+            return redirect()->route('pegawai')->with('success', 'Berhasil menambahkan data pegawai.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menambahkan data pegawai.');
+        }
     }
 
     /**
@@ -84,26 +78,32 @@ class PegawaiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Validasi input
         $request->validate([
-            'nama' => 'required',
-            'nip' => 'required|min:5',
-            'nomor_handphone' => 'required',
-            'email' => 'required|email',
-            'jabatan' => 'required'
+            'nama' => 'required|string|max:255',
+            'nip' => 'required|string|max:255|unique:pegawai,nip,' . $id,
+            'nomor_handphone' => 'required|string|max:15|unique:pegawai,nomor_handphone,' . $id,
+            'email' => 'required|string|email|max:255|unique:pegawai,email,' . $id,
+            'jabatan' => 'required|string|max:255',
+        ], [
+            'nip.unique' => 'NIP sudah terdaftar.',
+            'nomor_handphone.unique' => 'Nomor handphone sudah digunakan.',
+            'email.unique' => 'Email sudah digunakan.',
         ]);
 
-        // Temukan pegawai dan perbarui data
-        $pegawai = Pegawai::findOrFail($id);
-        $pegawai->update($request->only([
-            'nama',
-            'nip',
-            'nomor_handphone',
-            'email',
-            'jabatan'
-        ]));
+        try {
+            $pegawai = Pegawai::findOrFail($id);
+            $pegawai->update($request->only([
+                'nama',
+                'nip',
+                'nomor_handphone',
+                'email',
+                'jabatan'
+            ]));
 
-        return redirect()->route('pegawai')->with('success', 'Data Berhasil Diubah!');
+            return redirect()->route('pegawai')->with('success', 'Data Berhasil Diubah!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat memperbarui data pegawai.');
+        }
     }
 
     /**
@@ -111,13 +111,13 @@ class PegawaiController extends Controller
      */
     public function hapus($id)
     {
-        // Find the employee by ID or fail
-        $pegawai = Pegawai::findOrFail($id);
-        $tamu = Tamu::where('pegawai_id', $id)->exists();
-        
-        // Delete the employee
-        $pegawai->delete();
+        try {
+            $pegawai = Pegawai::findOrFail($id);
+            $pegawai->delete();
 
-        return redirect()->route('pegawai')->with('success', 'Data pegawai berhasil dihapus.');
+            return redirect()->route('pegawai')->with('success', 'Data pegawai berhasil dihapus.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus data pegawai.');
+        }
     }
 }
