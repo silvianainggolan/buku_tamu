@@ -18,4 +18,18 @@ class Pegawai extends Model
         'jabatan'
     ];
 
+    protected $appends = [
+        'jumlah_terjadwal'
+    ];
+
+    public function tamu()
+    {
+        return $this->hasMany(Tamu::class);
+    }
+
+    public function getJumlahTerjadwalAttribute()
+    {
+        return Tamu::where('nip', $this->attributes['nip'])->count();
+    }
+
 }

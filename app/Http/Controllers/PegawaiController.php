@@ -6,13 +6,14 @@ use Illuminate\Http\Request;
 use App\Models\Pegawai;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Redirect;
+use App\Models\Tamu;
 
 class PegawaiController extends Controller
 {
     /**
      * Menampilkan daftar pegawai dengan pencarian opsional.
      */
-    public function index(Request $request): View
+    public function index(Request $request)
     {
         // Ambil parameter pencarian dari query string
         $search = $request->input('search');
@@ -112,7 +113,8 @@ class PegawaiController extends Controller
     {
         // Find the employee by ID or fail
         $pegawai = Pegawai::findOrFail($id);
-
+        $tamu = Tamu::where('pegawai_id', $id)->exists();
+        
         // Delete the employee
         $pegawai->delete();
 

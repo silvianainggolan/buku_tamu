@@ -23,7 +23,10 @@
                     </div>
                     
                     <!-- Kalender -->
-                    <div id='calendar'></div>
+
+                    <x-bladewind::centered-content size="small">
+                        <div id='calendar'></div>
+                    </x-bladewind::centered-content>
                 </div>
             </div>
         </div>
@@ -62,7 +65,6 @@
     <style>
         /* Mengatur ukuran keseluruhan kalender */
         #calendar {
-            max-width: 50%;
             margin: 0 auto;
         }
 
