@@ -26,7 +26,7 @@ class PegawaiController extends Controller
             });
         }
 
-        $pegawai = $query->latest()->paginate(10);
+        $pegawai = $query->latest()->paginate(3);
 
         return view('pegawai', compact('pegawai'));
     }
