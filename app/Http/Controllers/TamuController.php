@@ -147,7 +147,11 @@ class TamuController extends Controller
         $temp = $request->status == 1 ? "Reservasi anda dikonfirmasi!" : "Reservasi anda tidak dikonfirmasi!";
         $data = [
             'name' => $temp,
-            'body' => $request->pesan
+            
+            'tamu' => $tamu,
+            'tanggal_berkunjung' => $request->tanggal_berkunjung, 
+            'jam_berkunjung' => $request->jam_berkunjung 
+
         ];
     
         Mail::to($tamu->email)->send(new SendEmail($data));

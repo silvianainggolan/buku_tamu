@@ -51,10 +51,7 @@
                             <input type="time" id="waktu_konfirmasi" name="waktu_konfirmasi" value="{{ old('waktu_konfirmasi') }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600">
                         </div>
 
-                        <div class="mb-4">
-                            <label for="pesan" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Pesan</label>
-                            <input type="text" id="pesan" name="pesan" value="{{ old('pesan', $tamu->pesan) }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600">
-                        </div>
+                       
 
                         <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
     Simpan
