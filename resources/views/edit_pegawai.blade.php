@@ -45,7 +45,7 @@
                             show_placeholder_always="true"
                             class="input-custom-width" />
                         <br>
-                        <x-bladewind::button can_submit="true" color="yellow">EDIT</x-bladewind::button>
+                        <x-bladewind::button can_submit="true" color="green">SIMPAN</x-bladewind::button>
                         <x-bladewind::button color="red" onclick="window.history.back()">BATAL</x-bladewind::button>
 
                     </form>
