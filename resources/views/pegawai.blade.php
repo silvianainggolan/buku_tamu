@@ -58,13 +58,15 @@
                             <td>{{ $item['nomor_handphone'] }}</td>
                             <td>{{ $item['email'] }}</td>
                             <td>{{ $item['jabatan'] }}</td>
-                            <td>
-                                <a href="{{ route('pegawai.edit', $item['id']) }}" class="btn btn-sm btn-primary"><x-bladewind::button color="yellow">EDIT</x-bladewind::button></a>
+                            <td class="flex space-x-2">
+                                <a href="{{ route('pegawai.edit', $item['id']) }}">
+                                    <x-bladewind::button color="yellow">EDIT</x-bladewind::button>
+                                </a>
                                 @if($item['jumlah_terjadwal'] == 0)
                                 <form action="{{ route('pegawai.hapus', $item['id']) }}" method="POST" style="display:inline-block;" class="delete-form">
                                     @csrf
                                     @method('DELETE')
-                                    <x-bladewind::button type="button" color="red" class="delete-btn">HAPUS</x-bladewind::button>
+                                    <x-bladewind::button type="button" color="red" class="delete-btn text-white bg-red-500">HAPUS</x-bladewind::button>
                                 </form>
                                 @endif
                             </td>
