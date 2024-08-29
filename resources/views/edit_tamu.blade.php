@@ -55,7 +55,7 @@
                             </select>
                         </div>
 
-                        <x-bladewind::button can_submit="true" color="yellow">EDIT TAMU</x-bladewind::button>
+                        <x-bladewind::button can_submit="true" color="green">SIMPAN </x-bladewind::button>
                         </button>
                     </form>
                 </div>

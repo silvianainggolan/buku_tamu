@@ -30,7 +30,7 @@
     cursor: pointer; 
     transition: 0.3s;
 ">
-    Edit Admin
+    Simpan Admin
 </button>
 
 <style>

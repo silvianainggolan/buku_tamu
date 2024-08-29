@@ -7,108 +7,115 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-md sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <!-- Pesan Sukses atau Error -->
+                    @if(session('success'))
+                        <div class="bg-green-100 text-green-800 p-4 rounded mb-4">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    @if(session('error'))
+                        <div class="bg-red-100 text-red-800 p-4 rounded mb-4">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+                    <!-- Akhir dari Pesan Sukses atau Error -->
+
                     <!-- Tombol Tambah Tamu -->
-                    <x-bladewind::button color="purple" tag="a" href="{{ route('tamu.tambah') }}">
-                        Tambah Tamu
-                    </x-bladewind::button>
+                    <div class="mb-4">
+                        <a href="{{ route('tamu.tambah') }}">
+                            <x-bladewind::button color="green" class="hover:bg-green-700">TAMBAH</x-bladewind::button>
+                        </a>
+                    </div>
 
                     <!-- Form Pencarian -->
-                    <form method="GET" action="{{ route('tamu') }}" class="my-4 flex">
+                    <form method="GET" action="{{ route('tamu') }}" class="my-4 flex items-center space-x-2">
                         <input
                             name="search"
                             type="text"
                             placeholder="Cari berdasarkan nama, no handphone, email..."
                             value="{{ request('search') }}"
-                            class="flex-1 mr-2 border border-gray-300 rounded px-3 py-2"
+                            class="flex-1 border border-gray-300 rounded-md px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
-                        <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded">
+                        <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
                             Cari
                         </button>
                     </form>
 
                     <!-- Tabel Tamu dengan Scroll Horizontal -->
                     <div class="overflow-x-auto mt-6">
-                        <x-bladewind::table class="min-w-full">
-                            <x-slot name="header">
-                                <th>No</th>
-                                <th>Status</th>
-                                <th>Nama</th>
-                                <th>No Handphone</th>
-                                <th>Email</th>
-                                <th>Keperluan</th>
-                                <th>pegawai</th>
-                                <th>tanggal / waktu permohonan</th>
-                                <th>tanggal / waktu berkunjung</th>
-                                <th>Aksi</th>
-                            </x-slot>
-                            
-                            @forelse ($tamu as $item)
+                        <table class="min-w-full divide-y divide-gray-200 bg-gray-50 shadow-md rounded-lg">
+                            <thead class="bg-gray-200">
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No Handphone</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Keperluan</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pegawai</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal / Waktu Permohonan</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal / Waktu Konfirmasi</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                @forelse ($tamu as $item)
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
                                         @if ($item->status == 0)
-                                            <x-bladewind::tag label="Belum Dikonfirmasi" color="red" />    
+                                            <x-bladewind::tag label="Belum Dikonfirmasi" color="red" />
                                         @else
                                             <x-bladewind::tag label="Dikonfirmasi" color="green" />
                                         @endif
-
                                         @if (isset($item->pesan))
                                             <br>
                                             <small>{{ $item->pesan }}</small>
                                         @endif
                                     </td>
-                                    <td>{{ $item->nama }}</td>
-                                    <td>{{ $item->nomor_handphone }}</td>
-                                    <td>{{ $item->email }}</td>
-                                    <td>{{ $item->keperluan }}</td>
-                                    <td>{{ $item->nip }}<br>{{$item->pegawai->nama}} </td> 
-                                    <td>{{ $item->tanggal_berkunjung}} <br>{{ $item->jam_berkunjung}}</td>
-                                    <td>{{ $item->tanggal_konfirmasi }} <br>{{ $item->waktu_konfirmasi }}</td>
-                                    <td class="whitespace-nowrap">
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $item->nama }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $item->nomor_handphone }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $item->email }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $item->keperluan }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $item->nip }}<br>{{ $item->pegawai->nama }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $item->tanggal_berkunjung }} <br>{{ $item->jam_berkunjung }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $item->tanggal_konfirmasi }} <br>{{ $item->waktu_konfirmasi }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex space-x-2">
                                             <a href="{{ route('tamu.konfirmasi', $item->id) }}">
-                                                <x-bladewind::button color="green" class="hover:shadow-md">KONFIRMASI</x-bladewind::button>
+                                                <x-bladewind::button color="green" class="hover:bg-green-700">KONFIRMASI</x-bladewind::button>
                                             </a>
                                             <a href="{{ route('tamu.edit', $item->id) }}">
-                                                <x-bladewind::button color="yellow" class="hover:shadow-md">EDIT</x-bladewind::button>
+                                                <x-bladewind::button color="yellow" class="hover:bg-yellow-500">EDIT</x-bladewind::button>
                                             </a>
-                                            <form action="{{ route('tamu.hapus', $item->id) }}" method="POST" style="display:inline-block;" class="delete-form">
+                                            <form action="{{ route('tamu.hapus', $item->id) }}" method="POST" class="delete-form">
                                                 @csrf
                                                 @method('DELETE')
-                                                <x-bladewind::button color="red" class="delete-btn hover:shadow-md" data-id="{{ $item->id }}">HAPUS</x-bladewind::button>
+                                                <x-bladewind::button type="button" color="red" class="text-white hover:bg-red-600 delete-btn">HAPUS</x-bladewind::button>
                                             </form>
                                         </div>
                                     </td>
                                 </tr>
-                            @empty
+                                @empty
                                 <tr>
-                                    <td colspan="10" class="text-center">Tidak ada data yang ditemukan.</td>
+                                    <td colspan="10" class="text-center px-6 py-4">Tidak ada data yang ditemukan.</td>
                                 </tr>
-                            @endforelse
-                        </x-bladewind::table>
+                                @endforelse
+                            </tbody>
+                        </table>
                     </div>
 
-                    <!-- Pagination Links -->
+                    <!-- Pagination -->
                     <div class="mt-4">
-                        {{ $tamu->links() }}
+                        {{ $tamu->links('pagination::tailwind') }}
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- SweetAlert CSS Customization -->
-    <style>
-        .swal-modal {
-            font-family: sans-serif;
-        }
-
-        .swal-text {
-            text-align: center;
-        }
-    </style>
 
     <!-- Include SweetAlert JavaScript Library -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
